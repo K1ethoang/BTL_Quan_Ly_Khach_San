@@ -151,5 +151,5 @@ void outputARoomRenterByVertical(RoomRenter roomRenter)
 
 void outputARoomRenterByHorizontal(RoomRenter roomRenter)
 {
-    printf("| %-30s | %-.2d/%.-2d/%-.4d   | %-9s | %-15s | %-20s | %-10d |\n", roomRenter.fullName, roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year, getSex(roomRenter.sex), roomRenter.phoneNumber, roomRenter.identityCard, roomRenter.roomNumber);
+    printf("| %-30s| %-.2d/%.-2d/%-.4d    | %-9s | %-15s | %-20s | %-10d |\n", roomRenter.fullName, roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year, getSex(roomRenter.sex), roomRenter.phoneNumber, roomRenter.identityCard, roomRenter.roomNumber);
 }
