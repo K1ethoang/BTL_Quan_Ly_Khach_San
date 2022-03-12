@@ -20,7 +20,7 @@ struct RoomRenter
 
 bool validDate(int *day, int *month, int *year);           // xem ngày có hợp lệ hay không
 void inputDate(int *day, int *month, int *year);           // nhập ngày tháng năm
-bool chooseSex(const char *string);                        // chọn giới tính
+bool chooseSex();                                          // chọn giới tính
 const char *getSex(bool sex);                              // lấy chuỗi giới tính
 void inputARoomRenter(RoomRenter *roomRenter);             // nhập 1 người thuê
 void outputARoomRenterByVertical(RoomRenter roomRenter);   // in 1 người thuê theo chiều dọc
@@ -91,7 +91,7 @@ bool chooseSex()
             exit = true;
             break;
         default:
-            printf("\n\t%50c(!) Gioi tinh khong hop le - Nhap lai (!)\n\a", ' ');
+            printf("\n\t%40c(!) Gioi tinh khong hop le - Nhap lai (!)\n\a", ' ');
             break;
         }
     } while (!exit);
@@ -110,19 +110,19 @@ void inputARoomRenter(RoomRenter *roomRenter)
 {
     system("cls");
     fflush(stdin);
-    printf("%50c(?) Nhap ho va ten: ", ' ');
+    printf("\n%50c(?) Nhap ho va ten: ", ' ');
     gets(roomRenter->fullName);
     system("cls");
-    printf("\t%50cNgay sinh\n", ' ');
+    printf("\n%50cNgay sinh\n", ' ');
     inputDate(&roomRenter->birthDay.day, &roomRenter->birthDay.month, &roomRenter->birthDay.year);
     system("cls");
-    printf("%50c(?) Gioi tinh", ' ');
+    printf("\n%50c(?) Gioi tinh", ' ');
     roomRenter->sex = chooseSex();
     system("cls");
     fflush(stdin);
     do
     {
-        printf("%50c(?) Nhap so dien thoai: ", ' ');
+        printf("\n%50c(?) Nhap so dien thoai: ", ' ');
         gets(roomRenter->phoneNumber);
         if (strlen(roomRenter->phoneNumber) <= 0 || strlen(roomRenter->phoneNumber) > 10 || strlen(roomRenter->phoneNumber) != 10)
             printf("\n\t%40c(!) So dien thoai khong hop le - Nhap lai (!)\n\a", ' ');
@@ -130,7 +130,7 @@ void inputARoomRenter(RoomRenter *roomRenter)
     system("cls");
     do
     {
-        printf("%50c(?) Nhap so CCCD: ", ' ');
+        printf("\n%50c(?) Nhap so CCCD: ", ' ');
         gets(roomRenter->identityCard);
         if ((strlen(roomRenter->identityCard) <= 0 || strlen(roomRenter->identityCard) > 12) || strlen(roomRenter->identityCard) != 12)
             printf("\n\t%40c(!) So CMND/CCCD khong hop le - Nhap lai (!)\n\a", ' ');
