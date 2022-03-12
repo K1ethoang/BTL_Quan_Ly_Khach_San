@@ -1,7 +1,4 @@
 # vài điều muốn nói 
-- Được viết trên Visual Studio Code (VSCode)
-- Ngôn ngữ: C
-- Build file [main.cpp](Code/Program/main.cpp) -> main.exe rồi chạy file main.exe
 - Dùng để tham khảo khi học ✅ chứ KHÔNG để copy ❌.
 - Thấy hữu ích thì để lại cho tụi mình 1 ⭐ nha.
 
@@ -18,3 +15,8 @@
 - [Code](./Code/)
 - [Doc](./Báo%20cáo/)
 - [Slide](./Báo%20cáo/)
+
+# 3. Code
+- Được viết trên Visual Studio Code (VSCode)
+- Ngôn ngữ: C
+- Build file [main.cpp](Code/Program/main.cpp) -> main.exe rồi chạy file main.exe
