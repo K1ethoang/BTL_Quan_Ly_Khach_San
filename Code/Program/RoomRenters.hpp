@@ -17,10 +17,13 @@ void createList(RoomRenters *roomRenters);                                 // t�
 Node *createNode(RoomRenter value);                                        // tạo 1 node
 bool isExitPhoneNumber(RoomRenters roomRenters, const char *phoneNumber);  // kiểm tra SĐT này có chưa
 void addNodeInTail(RoomRenters *roomRenters, RoomRenter roomRenter);       // thêm node vào cuối
+void removeNodeInHead(RoomRenters *roomRenters);                           // xoá node đầu
+void removeNodeInTail(RoomRenters *roomRenters);                           // xoá node cuối
 void addARoomRenter(RoomRenters *roomRenters);                             // thêm 1 người thuê vào list
 void outputRoomRenters(RoomRenters roomRenters);                           // in list người thuê
 void swapTwoRoomRenters(RoomRenter *roomRenter1, RoomRenter *roomRenter2); // hoán vị 2 người thuê
 void editRoomRenters(RoomRenters *roomRenters, const char *phoneNumber);   // chỉnh sửa danh sách người thuê
+void deleteARoomRenter(RoomRenters *roomRenters, const char *phoneNumber); // xoá 1 người thuê
 
 void createList(RoomRenters *roomRenters)
 {
@@ -53,6 +56,40 @@ void addNodeInTail(RoomRenters *roomRenters, RoomRenter roomRenter)
     {
         roomRenters->pTail->pNext = p;
         roomRenters->pTail = p;
+    }
+}
+
+void removeNodeInHead(RoomRenters *roomRenters)
+{
+    if (roomRenters->pHead == NULL) // không có phần tử nào
+        return;
+    else
+    {
+        Node *p = roomRenters->pHead;
+        roomRenters->pHead = p->pNext;
+        free(p);
+    }
+}
+
+void removeNodeInTail(RoomRenters *roomRenters)
+{
+    if (roomRenters->pHead == NULL)
+        return;
+    // nếu phần tử nằm đầu cũng là phần tử nằm cuối
+    else if (roomRenters->pHead == roomRenters->pTail)
+        removeNodeInHead(roomRenters);
+    else
+    {
+        for (Node *t = roomRenters->pHead; t != NULL; t = t->pNext)
+        {
+            if (t->pNext == roomRenters->pTail)
+            {
+                free(roomRenters->pTail);
+                t->pNext = NULL;
+                roomRenters->pTail = t;
+                return;
+            }
+        }
     }
 }
 
@@ -112,12 +149,54 @@ void swapTwoRoomRenters(RoomRenter *roomRenter1, RoomRenter *roomRenter2)
 
 void editRoomRenters(RoomRenters *roomRenters, const char *phoneNumber)
 {
-    for (Node *t = roomRenters->pHead; t != NULL; t = t->pNext)
+    if (isExitPhoneNumber(*roomRenters, phoneNumber))
+        printf("\n\t(!) Khong ton tai nguoi thue nay (!)\n\a");
+    else
     {
-        if (strcmp(t->data.phoneNumber, phoneNumber) == 0)
+        for (Node *t = roomRenters->pHead; t != NULL; t = t->pNext)
         {
-            inputARoomRenter(&(t->data));
-            break;
+            if (strcmp(t->data.phoneNumber, phoneNumber) == 0)
+            {
+                inputARoomRenter(&(t->data));
+                printf("\n\t(*) Chinh sua thanh cong (*)\n");
+                break;
+            }
+        }
+    }
+}
+
+void deleteARoomRenter(RoomRenters *roomRenters, const char *phoneNumber)
+{
+    // nếu phần tử nằm đầu
+    if (strcmp(roomRenters->pHead->data.phoneNumber, phoneNumber) == 0)
+    {
+        removeNodeInHead(roomRenters);
+        printf("\n\t(*) Thanh toan thanh cong (*)\n");
+    }
+    // nếu phần tử nằm cuối
+    else if (strcmp(roomRenters->pTail->data.phoneNumber, phoneNumber) == 0)
+    {
+        removeNodeInTail(roomRenters);
+        printf("\n\t(*) Thanh toan thanh cong (*)\n");
+    }
+    else
+    {
+        if (isExitPhoneNumber(*roomRenters, phoneNumber))
+            printf("\n\t(!) Khong ton tai nguoi thue nay (!)\n\a");
+        else
+        {
+            Node *g = NULL; // node nằm trước node cần xoá
+            for (Node *t = roomRenters->pHead->pNext; t != NULL; t = t->pNext)
+            {
+                if (strcmp(t->data.phoneNumber, phoneNumber) == 0)
+                {
+                    g->pNext = t->pNext; // cập nhật lại node nằm trước node cần xoá liên kết với node kế tiếp của nó
+                    free(t);
+                    printf("\n\t(*) Thanh toan thanh cong (*)\n");
+                    return;
+                }
+                g = t;
+            }
         }
     }
 }
