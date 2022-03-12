@@ -113,10 +113,10 @@ void inputARoomRenter(RoomRenter *roomRenter)
     printf("\n%50c(?) Nhap ho va ten: ", ' ');
     gets(roomRenter->fullName);
     system("cls");
-    printf("\n%50cNgay sinh\n", ' ');
+    printf("\n%50c(*) Ngay sinh (*)\n", ' ');
     inputDate(&roomRenter->birthDay.day, &roomRenter->birthDay.month, &roomRenter->birthDay.year);
     system("cls");
-    printf("\n%50c(?) Gioi tinh", ' ');
+    printf("\n%50c(*) Gioi tinh (*)", ' ');
     roomRenter->sex = chooseSex();
     system("cls");
     fflush(stdin);
