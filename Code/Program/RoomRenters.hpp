@@ -20,7 +20,7 @@ void addNodeInTail(RoomRenters *roomRenters, RoomRenter roomRenter);       // th
 void addARoomRenter(RoomRenters *roomRenters);                             // thêm 1 người thuê vào list
 void outputRoomRenters(RoomRenters roomRenters);                           // in list người thuê
 void swapTwoRoomRenters(RoomRenter *roomRenter1, RoomRenter *roomRenter2); // hoán vị 2 người thuê
-void editRoomRenters(RoomRenters *roomRenters, RoomRenter roomRenter);     // chỉnh sửa danh sách người thuê
+void editRoomRenters(RoomRenters *roomRenters, const char *phoneNumber);   // chỉnh sửa danh sách người thuê
 
 void createList(RoomRenters *roomRenters)
 {
@@ -110,11 +110,14 @@ void swapTwoRoomRenters(RoomRenter *roomRenter1, RoomRenter *roomRenter2)
     *roomRenter2 = temp;
 }
 
-void editRoomRenters(RoomRenters *roomRenters, RoomRenter roomRenter)
+void editRoomRenters(RoomRenters *roomRenters, const char *phoneNumber)
 {
     for (Node *t = roomRenters->pHead; t != NULL; t = t->pNext)
     {
-        if (strcmp(t->data.phoneNumber, roomRenter.phoneNumber) == 0)
-            swapTwoRoomRenters(&(t->data), &roomRenter);
+        if (strcmp(t->data.phoneNumber, phoneNumber) == 0)
+        {
+            inputARoomRenter(&(t->data));
+            break;
+        }
     }
 }
