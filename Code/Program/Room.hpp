@@ -98,6 +98,7 @@ void inputARoom(Room *room)
 
 void outputARoomByVertical(Room room)
 {
+    fflush(stdin);
     printf("\n%50cSo phong: %d", ' ', room.number);
     printf("\n%50cLoai phong: %s", ' ', room.type);
     printf("\n%50cTinh trang: %s", ' ', getStatus(room.isActive));
