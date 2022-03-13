@@ -14,18 +14,18 @@ struct RoomRenters
     Node *pTail;
 };
 
-void createList(RoomRenters &roomRenters);                                 // tạo list
-Node *createNode(RoomRenter value);                                        // tạo 1 node
-bool isExitPhoneNumber(RoomRenters roomRenters, char *phoneNumber);        // kiểm tra SĐT này có chưa
-bool isExitIdentityCard(RoomRenters roomRenters, char *identityCard);      // kiểm tra CCCD này có chưa
-void addNodeInTail(RoomRenters &roomRenters, RoomRenter roomRenter);       // thêm node vào cuối
-void removeNodeInHead(RoomRenters &roomRenters);                           // xoá node đầu
-void removeNodeInTail(RoomRenters &roomRenters);                           // xoá node cuối
-void addARoomRenter(RoomRenters &roomRenters);                             // thêm 1 người thuê vào list
-void outputRoomRenters(RoomRenters roomRenters);                           // in list người thuê
-void swapTwoRoomRenters(RoomRenter &roomRenter1, RoomRenter &roomRenter2); // hoán vị 2 người thuê
-void UpdateRoomRenter(RoomRenters &roomRenters, char *phoneNumber);        // chỉnh sửa danh sách người thuê
-void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber);       // xoá 1 người thuê
+void createList(RoomRenters &roomRenters);                                               // tạo list
+Node *createNode(RoomRenter value);                                                      // tạo 1 node
+bool isExitPhoneNumber(RoomRenters roomRenters, char *phoneNumber);                      // kiểm tra SĐT này có chưa
+bool isExitIdentityCard(RoomRenters roomRenters, char *identityCard);                    // kiểm tra CCCD này có chưa
+void addNodeInTail(RoomRenters &roomRenters, RoomRenter roomRenter);                     // thêm node vào cuối
+void removeNodeInHead(RoomRenters &roomRenters);                                         // xoá node đầu
+void removeNodeInTail(RoomRenters &roomRenters);                                         // xoá node cuối
+void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n);                      // thêm 1 người thuê vào list
+void outputRoomRenters(RoomRenters roomRenters);                                         // in list người thuê
+void swapTwoRoomRenters(RoomRenter &roomRenter1, RoomRenter &roomRenter2);               // hoán vị 2 người thuê
+void UpdateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber); // chỉnh sửa danh sách người thuê
+void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber);                     // xoá 1 người thuê
 
 void createList(RoomRenters &roomRenters)
 {
@@ -115,10 +115,10 @@ bool isExitIdentityCard(RoomRenters roomRenters, char *identityCard)
     return 0;
 }
 
-void addARoomRenter(RoomRenters &roomRenters)
+void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
 {
     RoomRenter r;
-    inputARoomRenter(r);
+    inputARoomRenter(r, rooms, n);
     do
     {
         if (isExitPhoneNumber(roomRenters, r.phoneNumber))
@@ -129,7 +129,7 @@ void addARoomRenter(RoomRenters &roomRenters)
             fflush(stdin);
             gets(r.phoneNumber);
         }
-    } while (isExitIdentityCard(roomRenters, r.phoneNumber));
+    } while (isExitPhoneNumber(roomRenters, r.phoneNumber));
     do
     {
         if (isExitIdentityCard(roomRenters, r.identityCard))
@@ -170,7 +170,7 @@ void swapTwoRoomRenters(RoomRenter *roomRenter1, RoomRenter *roomRenter2)
     *roomRenter2 = temp;
 }
 
-void UpdateRoomRenter(RoomRenters &roomRenters, char *phoneNumber)
+void UpdateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber)
 {
     if (!isExitPhoneNumber(roomRenters, phoneNumber))
         printf("\n\t%40c(!) Khong ton tai nguoi thue nay (!)\n\a", ' ');
@@ -180,7 +180,7 @@ void UpdateRoomRenter(RoomRenters &roomRenters, char *phoneNumber)
         {
             if (strcmp(t->data.phoneNumber, phoneNumber) == 0)
             {
-                inputARoomRenter(t->data);
+                inputARoomRenter(t->data, rooms, n);
                 printf("\n\t%40c(*) Chinh sua thanh cong (*)\n", ' ');
                 break;
             }
