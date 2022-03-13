@@ -15,8 +15,11 @@
 - [Code](./Code/)
 - [Doc](./Báo%20cáo/)
 - [Slide](./Báo%20cáo/)
-
+- 
 # 3. Code
 - Được viết trên Visual Studio Code (VSCode)
 - Ngôn ngữ: C
 - Build file [main.cpp](Code/Program/main.cpp) -> main.exe rồi chạy file main.exe
+- Đăng nhập
+  - Tài khoản: nhom3
+  - Mat khẩu: 1234
