@@ -37,9 +37,9 @@ void menu()
         {
             system("cls");
             printf("\n\t%50c1. THEM NGUOI THUE\n");
-            printf("\n\t%50c(*) Nhap thong tin nguoi thue (*)\n");
+            printf("\n\t%50c() Nhap thong tin nguoi thue ()\n");
             system("pause");
-            addARoomRenter(roomRenters);
+            addARoomRenter(roomRenters, rooms, n);
             break;
         }
         case 2:
@@ -48,7 +48,7 @@ void menu()
             RoomRenter r;
             printf("\n\t%50c2. XEM DANH SACH NGUOI THUE\n");
             if (roomRenters.pHead == NULL)
-                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a", ' ');
+                printf("\n\t%50c() Danh sach nguoi thue trong ()\n\a", ' ');
             else
                 outputRoomRenters(roomRenters);
             system("pause");
@@ -59,14 +59,14 @@ void menu()
             system("cls");
             printf("\n\t%50c3. CHINH SUA NGUOI THUE\n");
             if (roomRenters.pHead == NULL)
-                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a", ' ');
+                printf("\n\t%50c() Danh sach nguoi thue trong ()\n\a", ' ');
             else
             {
                 char phoneNumber[15];
                 printf("\n%50cNhap SDT cua nguoi thue can sua: ");
                 fflush(stdin);
                 gets(phoneNumber);
-                UpdateRoomRenter(roomRenters, phoneNumber);
+                UpdateRoomRenter(roomRenters, rooms, n, phoneNumber);
             }
             system("pause");
             break;
@@ -76,7 +76,7 @@ void menu()
             system("cls");
             printf("\n\t%50c4. THANH TOAN\n");
             if (roomRenters.pHead == NULL)
-                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a", ' ');
+                printf("\n\t%50c() Danh sach nguoi thue trong ()\n\a", ' ');
             else
             {
                 char phoneNumber[15];
