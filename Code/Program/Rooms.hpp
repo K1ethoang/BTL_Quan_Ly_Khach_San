@@ -1,5 +1,6 @@
 #pragma once
 #include "Room.hpp"
+#include <windows.h>
 
 void readRooms(Room rooms[], int &n);               // đọc danh sách các phòng
 void writeRooms(Room rooms[], int &n);              // ghi danh sách các phòng
@@ -20,6 +21,7 @@ void readRooms(Room rooms[], int &n)
             Room r;
             readARoom(fileIn, r);
             rooms[n++] = r; // đưa phòng vừa đọc vào mảng
+            Sleep(100);     // delay 0.1s
             printf("\n%50c(*) Doc ban ghi thu %d (*)\n", ' ', n);
         }
     }

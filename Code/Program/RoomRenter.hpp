@@ -59,14 +59,14 @@ void inputDate(int &day, int &month, int &year)
 {
     do
     {
-        printf("\n%50c(?) Nhap ngay: ", ' ');
+        printf("\n\t%50c(?) Nhap ngay: ", ' ');
         scanf("%d", &day);
-        printf("\n%50c(?) Nhap thang: ", ' ');
+        printf("\n\t%50c(?) Nhap thang: ", ' ');
         scanf("%d", &month);
-        printf("\n%50c(?) Nhap nam: ", ' ');
+        printf("\n\t%50c(?) Nhap nam: ", ' ');
         scanf("%d", &year);
         if (!isValidDate(day, month, year))
-            printf("\n\t%50c(!) Ngay sinh khong hop le - Nhap lai (!)\n\a", ' ');
+            printf("\n\t%40c(!) Ngay sinh khong hop le - Nhap lai (!)\n\a", ' ');
     } while (!isValidDate(day, month, year));
 }
 
@@ -142,7 +142,7 @@ void inputARoomRenter(RoomRenter &roomRenter, Room rooms[], int n)
     fflush(stdin);
     do
     {
-        printf("\n%50c(?) Nhap so dien thoai: ", ' ');
+        printf("\n%50c(?) Nhap so dien thoai (10 so): ", ' ');
         gets(roomRenter.phoneNumber);
         if (strlen(roomRenter.phoneNumber) <= 0 || strlen(roomRenter.phoneNumber) > 10 || strlen(roomRenter.phoneNumber) != 10)
             printf("\n\t%40c(!) So dien thoai khong hop le - Nhap lai (!)\n\a", ' ');
@@ -150,7 +150,7 @@ void inputARoomRenter(RoomRenter &roomRenter, Room rooms[], int n)
     system("cls");
     do
     {
-        printf("\n%50c(?) Nhap so CCCD: ", ' ');
+        printf("\n%50c(?) Nhap so CCCD (12 so): ", ' ');
         gets(roomRenter.identityCard);
         if ((strlen(roomRenter.identityCard) <= 0 || strlen(roomRenter.identityCard) > 12) || strlen(roomRenter.identityCard) != 12)
             printf("\n\t%40c(!) So CCCD khong hop le - Nhap lai (!)\n\a", ' ');
