@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 struct Room
 {
@@ -13,11 +14,9 @@ void chooseRoomStatus(Room &room);         // chọn tình trạng phòng
 void inputARoom(Room *room);               // nhập 1 phòng
 void outputARoomByVertical(Room room);     // in 1 phòng theo chiều dọc
 void outputARoomByHorizontal(Room room);   // in 1 phòng theo chiều ngang
-void outputRooms(Room room[], int n);      // xuất danh sách các phòng
 void removeEnterChar(char *s);             // xoá kí tự \n
 void readARoom(FILE *fileIn, Room &room);  // đọc 1 phòng từ file
 void writeARoom(FILE *fileOut, Room room); // ghi 1 phòng
-void readRooms(Room room[], int &n);       // đọc danh sách các phòng
 
 void chooseRoomType(Room &room)
 {
@@ -118,21 +117,6 @@ void removeEnterChar(char *s)
         s[length - 1] = '\0';
 }
 
-void outputRooms(Room room[], int n)
-{
-    int count = 1;
-    printf("\n");
-    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
-    printf("%50c|  STT  |  So phong  |   Loai phong   |   Tinh trang   |\n", ' ');
-    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
-    for (int i = 0; i < n; i++)
-    {
-        printf("%50c|   %d   ", ' ', count++);
-        outputARoomByHorizontal(room[i]);
-    }
-    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
-}
-
 void readARoom(FILE *fileIn, Room &room)
 {
     fscanf(fileIn, "%d", &room.number);
@@ -144,25 +128,7 @@ void readARoom(FILE *fileIn, Room &room)
 
 void writeARoom(FILE *fileOut, Room room)
 {
-    fprintf(fileOut, "%d\n", room.number);
-    fprintf(fileOut, "%s\n", room.type);
-    fprintf(fileOut, "%d\n", room.isActive);
-}
-
-void readRooms(Room room[], int &n)
-{
-    FILE *fileIn = fopen("../File/room/room.in", "r");
-    if (fileIn == NULL)
-        printf("\n%50c(!) Loi khi mo file (!)\n\a");
-    else
-    {
-        n = 0;
-        while (!feof(fileIn))
-        {
-            Room r;
-            readARoom(fileIn, r);
-            room[n++] = r; // đưa phòng vừa đọc vào mảng
-        }
-    }
-    fclose(fileIn);
+    fprintf(fileOut, "\n%d", room.number);
+    fprintf(fileOut, "\n%s", room.type);
+    fprintf(fileOut, "\n%d", room.isActive);
 }
