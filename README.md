@@ -15,7 +15,7 @@
 - [Code](./Code/)
 - [Doc](./Báo%20cáo/)
 - [Slide](./Báo%20cáo/)
-- 
+ 
 # 3. Code
 - Được viết trên Visual Studio Code (VSCode)
 - Ngôn ngữ: C
