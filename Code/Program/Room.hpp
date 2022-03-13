@@ -5,21 +5,21 @@
 struct Room
 {
     int number;    // số phòng
-    char type[20]; // loại phòng: thường or cao cấp
+    char type[10]; // loại phòng: thường or cao cấp
     bool isActive; // tình trạng phòng - 0:trống   1:đầy
 };
-void chooseRoomType(Room *room);         // chọn loại phòng
-bool chooseRoomStatus();                 // chọn tình trạng phòng
-const char *getStatus(bool isActive);    // lấy chuỗi tình trạng phòng
-void inputARoom(Room *room);             // nhập 1 phòng
-void outputARoomByVertical(Room room);   // in 1 phòng theo chiều dọc
-void outputARoomByHorizontal(Room room); // in 1 phòng theo chiều dọc
-void outputRooms(Room room[], int n);    // in danh sách các phòng hiện có - mảng
-void removeEnterChar(char *s);           // xoá kí tự \n
-void readARoom(Room *room);
-void writeARoom(Room room);
+void chooseRoomType(Room &room);           // chọn loại phòng
+void chooseRoomStatus(Room &room);         // chọn tình trạng phòng
+void inputARoom(Room *room);               // nhập 1 phòng
+void outputARoomByVertical(Room room);     // in 1 phòng theo chiều dọc
+void outputARoomByHorizontal(Room room);   // in 1 phòng theo chiều ngang
+void outputRooms(Room room[], int n);      // xuất danh sách các phòng
+void removeEnterChar(char *s);             // xoá kí tự \n
+void readARoom(FILE *fileIn, Room &room);  // đọc 1 phòng từ file
+void writeARoom(FILE *fileOut, Room room); // ghi 1 phòng
+void readRooms(Room room[], int &n);       // đọc danh sách các phòng
 
-void chooseRoomType(Room *room)
+void chooseRoomType(Room &room)
 {
     int choose;
     bool exit = false;
@@ -32,11 +32,11 @@ void chooseRoomType(Room *room)
         switch (choose)
         {
         case 1:
-            strcpy(room->type, "Thuong");
+            strcpy(room.type, "Thuong");
             exit = true;
             break;
         case 2:
-            strcpy(room->type, "Cao cap");
+            strcpy(room.type, "Cao cap");
             exit = true;
             break;
         default:
@@ -46,10 +46,10 @@ void chooseRoomType(Room *room)
     } while (!exit);
 }
 
-bool chooseRoomStatus()
+void chooseRoomStatus(Room &room)
 {
     int choose;
-    bool exit = false, isActive;
+    bool exit = false;
     do
     {
         printf("\n%50c  1. Phong trong", ' ');
@@ -59,11 +59,11 @@ bool chooseRoomStatus()
         switch (choose)
         {
         case 1:
-            isActive = 0;
+            room.isActive = 0;
             exit = true;
             break;
         case 2:
-            isActive = 1;
+            room.isActive = 1;
             exit = true;
             break;
         default:
@@ -71,29 +71,20 @@ bool chooseRoomStatus()
             break;
         }
     } while (!exit);
-    return isActive;
 }
 
-const char *getStatus(bool isActive)
-{
-    if (isActive) // isActive = 1
-        return "Phong day";
-    else // isActive = 1
-        return "Phong trong";
-}
-
-void inputARoom(Room *room)
+void inputARoom(Room &room)
 {
     system("cls");
     printf("\n%50c(?) Nhap so phong: ", ' ');
-    scanf("%d", &room->number);
+    scanf("%d", &room.number);
     system("cls");
-    printf("\n%40c(*) Loai phong (*)", ' ');
+    printf("\n%50c(*) Loai phong (*)", ' ');
     fflush(stdin);
     chooseRoomType(room);
     system("cls");
-    printf("\n%40c(*) Tinh trang (*)", ' ');
-    room->isActive = chooseRoomStatus();
+    printf("\n%50c(*) Tinh trang (*)", ' ');
+    chooseRoomStatus(room);
 }
 
 void outputARoomByVertical(Room room)
@@ -101,15 +92,23 @@ void outputARoomByVertical(Room room)
     fflush(stdin);
     printf("\n%50cSo phong: %d", ' ', room.number);
     printf("\n%50cLoai phong: %s", ' ', room.type);
-    printf("\n%50cTinh trang: %s", ' ', getStatus(room.isActive));
+    char roomStatus[20];
+    if (room.isActive) // isActive = 1
+        strcpy(roomStatus, "Day");
+    else // isActive = 1
+        strcpy(roomStatus, "Trong");
+    printf("\n%50cTinh trang: %s", ' ', roomStatus);
 }
 
 void outputARoomByHorizontal(Room room)
 {
-    printf("| %-.3d|   %-20s|    %-20s|\n", room.number, room.type, getStatus(room.isActive));
+    char roomStatus[20];
+    if (room.isActive) // isActive = 1
+        strcpy(roomStatus, "Day");
+    else // isActive = 1
+        strcpy(roomStatus, "Trong");
+    printf("|    %-3d     |    %-11s |    %-11s |\n", room.number, room.type, roomStatus);
 }
-
-void outputRooms(Room room[], int n); // in danh sách các phòng hiện có - mảng
 
 void removeEnterChar(char *s)
 {
@@ -119,27 +118,51 @@ void removeEnterChar(char *s)
         s[length - 1] = '\0';
 }
 
-void readARoom(Room *room)
+void outputRooms(Room room[], int n)
 {
-    FILE *fileIn = fopen("../File/room_in.txt", "r");
-    if (fileIn == NULL)
-        printf("\n\t%40c (!) Loi khi mo file (!)\n\a", ' ');
-    else
+    int count = 1;
+    printf("\n");
+    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+    printf("%50c|  STT  |  So phong  |   Loai phong   |   Tinh trang   |\n", ' ');
+    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+    for (int i = 0; i < n; i++)
     {
-        fscanf(fileIn, "%d", &room->number);
-        fgetc(fileIn);
-        fgets(room->type, sizeof(room->type), fileIn);
-        removeEnterChar(room->type);
-        fscanf(fileIn, "%d", &room->isActive);
+        printf("%50c|   %d   ", ' ', count++);
+        outputARoomByHorizontal(room[i]);
     }
-    fclose(fileIn);
+    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
 }
 
-void writeARoom(Room room)
+void readARoom(FILE *fileIn, Room &room)
 {
-    FILE *fileOut = fopen("../File/room_out.txt", "w");
+    fscanf(fileIn, "%d", &room.number);
+    fgetc(fileIn);
+    fgets(room.type, sizeof(room.type), fileIn);
+    removeEnterChar(room.type);
+    fscanf(fileIn, "%d", &room.isActive);
+}
+
+void writeARoom(FILE *fileOut, Room room)
+{
     fprintf(fileOut, "%d\n", room.number);
     fprintf(fileOut, "%s\n", room.type);
     fprintf(fileOut, "%d\n", room.isActive);
-    fclose(fileOut);
+}
+
+void readRooms(Room room[], int &n)
+{
+    FILE *fileIn = fopen("../File/room/room.in", "r");
+    if (fileIn == NULL)
+        printf("\n%50c(!) Loi khi mo file (!)\n\a");
+    else
+    {
+        n = 0;
+        while (!feof(fileIn))
+        {
+            Room r;
+            readARoom(fileIn, r);
+            room[n++] = r; // đưa phòng vừa đọc vào mảng
+        }
+    }
+    fclose(fileIn);
 }
