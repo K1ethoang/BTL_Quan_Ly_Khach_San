@@ -1,10 +1,12 @@
+#pragma once
 #include "Room.hpp"
 
-void readRooms(Room room[], int &n);  // đọc danh sách các phòng
-void writeRooms(Room room[], int &n); // ghi danh sách các phòng
-void outputRooms(Room room[], int n); // xuất danh sách các phòng
+void readRooms(Room rooms[], int &n);               // đọc danh sách các phòng
+void writeRooms(Room rooms[], int &n);              // ghi danh sách các phòng
+void outputRooms(Room rooms[], int n);              // xuất danh sách các phòng
+Room *getRoom(Room rooms[], int n, int roomNumber); // lấy vị trí của phòng
 
-void readRooms(Room room[], int &n)
+void readRooms(Room rooms[], int &n)
 {
     FILE *fileIn = fopen("../File/room/room.in", "r");
     if (fileIn == NULL)
@@ -17,14 +19,14 @@ void readRooms(Room room[], int &n)
             fflush(stdin);
             Room r;
             readARoom(fileIn, r);
-            room[n++] = r; // đưa phòng vừa đọc vào mảng
+            rooms[n++] = r; // đưa phòng vừa đọc vào mảng
             printf("\n%50c(*) Doc ban ghi thu %d (*)\n", ' ', n);
         }
     }
     fclose(fileIn);
 }
 
-void writeRooms(Room room[], int &n)
+void writeRooms(Room rooms[], int &n)
 {
     int count = 1;
     FILE *fileOut = fopen("../File/room/room.in", "w");
@@ -35,14 +37,14 @@ void writeRooms(Room room[], int &n)
         for (int i = 0; i < n; i++)
         {
             fflush(stdin);
-            writeARoom(fileOut, room[i]);
+            writeARoom(fileOut, rooms[i]);
             printf("\n%50c(*) Ban ghi thu %d (*)\n", ' ', count++);
         }
     }
     fclose(fileOut);
 }
 
-void outputRooms(Room room[], int n)
+void outputRooms(Room rooms[], int n)
 {
     int count = 1;
     printf("\n");
@@ -52,7 +54,17 @@ void outputRooms(Room room[], int n)
     for (int i = 0; i < n; i++)
     {
         printf("%50c|  %-5d", ' ', count++);
-        outputARoomByHorizontal(room[i]);
+        outputARoomByHorizontal(rooms[i]);
     }
     printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+}
+
+Room *getRoom(Room rooms[], int n, int roomNumber)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (rooms[i].number == roomNumber)
+            return &rooms[i];
+    }
+    return NULL;
 }
