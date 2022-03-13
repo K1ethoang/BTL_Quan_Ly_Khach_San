@@ -1,4 +1,3 @@
-#include "RoomRenters.hpp"
 #include "menu.hpp"
 #include "conio.h"
 
