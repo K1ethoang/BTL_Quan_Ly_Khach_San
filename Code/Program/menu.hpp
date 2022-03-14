@@ -51,7 +51,7 @@ void menu()
             RoomRenter r;
             printf("\n\t%50c2. XEM DANH SACH NGUOI THUE\n");
             if (roomRenters.pHead == NULL)
-                printf("\n\t%50c() Danh sach nguoi thue trong ()\n\a");
+                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a");
             else
                 outputRoomRenters(roomRenters);
             system("pause");
@@ -62,13 +62,12 @@ void menu()
             system("cls");
             printf("\n\t%50c3. CHINH SUA NGUOI THUE\n");
             if (roomRenters.pHead == NULL)
-                printf("\n\t%50c() Danh sach nguoi thue trong ()\n\a");
+                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a");
             else
             {
                 char phoneNumber[15];
                 printf("\n%50cNhap SDT cua nguoi thue can sua: ");
-                fflush(stdin);
-                gets(phoneNumber);
+                scanf("%s", &phoneNumber);
                 UpdateRoomRenter(roomRenters, rooms, n, phoneNumber);
             }
             system("pause");
@@ -79,13 +78,12 @@ void menu()
             system("cls");
             printf("\n\t%50c4. THANH TOAN\n");
             if (roomRenters.pHead == NULL)
-                printf("\n\t%50c() Danh sach nguoi thue trong ()\n\a");
+                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a");
             else
             {
                 char phoneNumber[15];
                 printf("\n%50cNhap SDT cua nguoi thue can thanh toan: ");
-                fflush(stdin);
-                gets(phoneNumber);
+                scanf("%s", &phoneNumber);
                 deleteARoomRenter(roomRenters, phoneNumber);
             }
             system("pause");
@@ -181,7 +179,7 @@ void loading()
     printf("\n%48c[", ' ');
     for (int i = 0; i < 50; i++)
     {
-        Sleep(100);
+        Sleep(200);
         printf("%c", c[i]);
     }
     printf("]\n");

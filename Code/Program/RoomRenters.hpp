@@ -127,8 +127,7 @@ void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
             system("cls");
             printf("\n\t%40c(!) Da ton tai nguoi thue voi so dien thoai nay (!)\n\a", ' ');
             printf("\n%50c(?) Nhap lai so dien thoai khac: ", ' ');
-            fflush(stdin);
-            gets(r.phoneNumber);
+            scanf("%s", &r.phoneNumber);
         }
         // nhập lại mà ko hợp lệ - nhập lại tiếp
         do
@@ -138,7 +137,7 @@ void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
                 system("cls");
                 printf("\n\t%40c(!) So dien thoai khong hop le - Nhap lai (!)\n\a", ' ');
                 printf("\n%50c(?) Nhap so dien thoai (10 so): ", ' ');
-                gets(r.phoneNumber);
+                scanf("%s", &r.phoneNumber);
             }
         } while (strlen(r.phoneNumber) <= 0 || strlen(r.phoneNumber) > 10 || strlen(r.phoneNumber) != 10);
         system("cls");
@@ -151,8 +150,7 @@ void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
             system("cls");
             printf("\n\t%40c(!) Da ton tai nguoi thue voi so CCCD nay (!)\n\a", ' ');
             printf("\n%50c(?) Nhap lai so CCCD khac: ", ' ');
-            fflush(stdin);
-            gets(r.identityCard);
+            scanf("%s", &r.identityCard);
         }
         // nhập lại mà ko hợp lệ - nhập lại tiếp
         do
@@ -162,7 +160,7 @@ void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
                 system("cls");
                 printf("\n\t%40c(!) So CCCD khong hop le - Nhap lai (!)\n\a", ' ');
                 printf("\n%50c(?) Nhap so CCCD (12 so): ", ' ');
-                gets(r.identityCard);
+                scanf("%s", &r.identityCard);
             }
         } while ((strlen(r.identityCard) <= 0 || strlen(r.identityCard) > 12) || strlen(r.identityCard) != 12);
         system("cls");
