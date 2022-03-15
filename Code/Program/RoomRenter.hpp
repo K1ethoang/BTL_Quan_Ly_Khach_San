@@ -19,14 +19,15 @@ struct RoomRenter
     Room *room = NULL;     // trỏ đến phòng thuê
 };
 
-bool isValidDate(int day, int month, int year);                     // kiểm tra xem ngày có hợp lệ hay không
-void inputDate(int &day, int &month, int &year);                    // nhập ngày tháng năm
-void chooseSex(RoomRenter &roomRenter);                             // chọn giới tính
-bool isValidRoom(Room rooms[], int n, int roomNumber);              // kiểm tra số phòng có hợp lệ không
-void chooseRoom(RoomRenter &roomRenter, Room rooms[], int n);       // chọn phòng
-void inputARoomRenter(RoomRenter &roomRenter, Room rooms[], int n); // nhập 1 người thuê
-void outputARoomRenterByVertical(RoomRenter roomRenter);            // in 1 người thuê theo chiều dọc
-void outputARoomRenterByHorizontal(RoomRenter roomRenter);          // in 1 người thuê theo chiều ngang - có định dạng in
+bool isValidDate(int day, int month, int year);                                  // kiểm tra xem ngày có hợp lệ hay không
+void inputDate(int &day, int &month, int &year);                                 // nhập ngày tháng năm
+void chooseSex(RoomRenter &roomRenter);                                          // chọn giới tính
+bool isValidRoom(Room rooms[], int n, int roomNumber);                           // kiểm tra số phòng có hợp lệ không
+void chooseRoom(RoomRenter &roomRenter, Room rooms[], int n);                    // chọn phòng
+void inputARoomRenter(RoomRenter &roomRenter, Room rooms[], int n);              // nhập 1 người thuê
+void outputARoomRenterByVertical(RoomRenter roomRenter);                         // in 1 người thuê theo chiều dọc
+void outputARoomRenterByHorizontal(RoomRenter roomRenter);                       // in 1 người thuê theo chiều ngang - có định dạng in
+void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n); // đọc 1 người thuê
 
 bool isValidDate(int day, int month, int year) // kiểm tra ngày nhập
 {
@@ -59,14 +60,14 @@ void inputDate(int &day, int &month, int &year)
 {
     do
     {
-        printf("\n%50c(?) Nhap ngay: ", ' ');
+        printf("\n\t%50c(?) Nhap ngay: ", ' ');
         scanf("%d", &day);
-        printf("\n%50c(?) Nhap thang: ", ' ');
+        printf("\n\t%50c(?) Nhap thang: ", ' ');
         scanf("%d", &month);
-        printf("\n%50c(?) Nhap nam: ", ' ');
+        printf("\n\t%50c(?) Nhap nam: ", ' ');
         scanf("%d", &year);
         if (!isValidDate(day, month, year))
-            printf("\n\t%50c(!) Ngay sinh khong hop le - Nhap lai (!)\n\a", ' ');
+            printf("\n\t%40c(!) Ngay sinh khong hop le - Nhap lai (!)\n\a", ' ');
     } while (!isValidDate(day, month, year));
 }
 
@@ -122,7 +123,7 @@ void chooseRoom(RoomRenter &roomRenter, Room rooms[], int n)
             system("pause");
         }
         else
-            roomRenter.room = getRoom(rooms, n, roomNumber);
+            roomRenter.room = getRoom(rooms, n, roomNumber); // hàm này trong file Rooms.hpp
     } while (!isValidRoom(rooms, n, roomNumber));
 }
 
@@ -142,16 +143,16 @@ void inputARoomRenter(RoomRenter &roomRenter, Room rooms[], int n)
     fflush(stdin);
     do
     {
-        printf("\n%50c(?) Nhap so dien thoai: ", ' ');
-        gets(roomRenter.phoneNumber);
+        printf("\n%50c(?) Nhap so dien thoai (10 so): ", ' ');
+        scanf("%s", &roomRenter.phoneNumber);
         if (strlen(roomRenter.phoneNumber) <= 0 || strlen(roomRenter.phoneNumber) > 10 || strlen(roomRenter.phoneNumber) != 10)
             printf("\n\t%40c(!) So dien thoai khong hop le - Nhap lai (!)\n\a", ' ');
     } while (strlen(roomRenter.phoneNumber) <= 0 || strlen(roomRenter.phoneNumber) > 10 || strlen(roomRenter.phoneNumber) != 10);
     system("cls");
     do
     {
-        printf("\n%50c(?) Nhap so CCCD: ", ' ');
-        gets(roomRenter.identityCard);
+        printf("\n%50c(?) Nhap so CCCD (12 so): ", ' ');
+        scanf("%s", &roomRenter.identityCard);
         if ((strlen(roomRenter.identityCard) <= 0 || strlen(roomRenter.identityCard) > 12) || strlen(roomRenter.identityCard) != 12)
             printf("\n\t%40c(!) So CCCD khong hop le - Nhap lai (!)\n\a", ' ');
     } while ((strlen(roomRenter.identityCard) <= 0 || strlen(roomRenter.identityCard) > 12) || strlen(roomRenter.identityCard) != 12);
@@ -183,4 +184,16 @@ void outputARoomRenterByHorizontal(RoomRenter roomRenter)
     else
         strcpy(sex, "Nam");
     printf("| %-30s| %-.2d/%.-2d/%-.4d    | %-9s | %-15s | %-20s | %-10d |\n", roomRenter.fullName, roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year, sex, roomRenter.phoneNumber, roomRenter.identityCard, roomRenter.room->number);
+}
+
+void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n)
+{
+    int roomNumber = 0; // lưu tạm số phòng lúc đọc từ file
+    fgets(roomRenter.fullName, sizeof(roomRenter.fullName), fileIn);
+    removeEnterChar(roomRenter.fullName); // hàm này nằm trong file Room.hpp -> lấy kí tự '\n' cuối chuỗi khi đọc file
+    fscanf(fileIn, "%d%d%d", &roomRenter.birthDay.day, &roomRenter.birthDay.month, &roomRenter.birthDay.year);
+    fscanf(fileIn, "%d", &roomRenter.sex);
+    fscanf(fileIn, "%s%s", &roomRenter.phoneNumber, &roomRenter.identityCard);
+    fscanf(fileIn, "%d", &roomNumber);
+    roomRenter.room = getRoom(rooms, n, roomNumber); // lấy số phòng lưu tạm để trả về phòng của số phòng đó
 }

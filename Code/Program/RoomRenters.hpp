@@ -38,7 +38,7 @@ Node *createNode(RoomRenter value)
     Node *p = (Node *)calloc(1, sizeof(Node));
     if (p == NULL)
     {
-        printf("\n\t%50c(!) Khong du bo nho (!)", ' ');
+        printf("\n\t%50c(!) Khong du bo nho (!)");
         return NULL;
     }
     else
@@ -119,6 +119,7 @@ void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
 {
     RoomRenter r;
     inputARoomRenter(r, rooms, n);
+    // nếu số điện thoại đã tồn tại - cho nhập lại
     do
     {
         if (isExitPhoneNumber(roomRenters, r.phoneNumber))
@@ -126,10 +127,22 @@ void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
             system("cls");
             printf("\n\t%40c(!) Da ton tai nguoi thue voi so dien thoai nay (!)\n\a", ' ');
             printf("\n%50c(?) Nhap lai so dien thoai khac: ", ' ');
-            fflush(stdin);
-            gets(r.phoneNumber);
+            scanf("%s", &r.phoneNumber);
         }
+        // nhập lại mà ko hợp lệ - nhập lại tiếp
+        do
+        {
+            if (strlen(r.phoneNumber) <= 0 || strlen(r.phoneNumber) > 10 || strlen(r.phoneNumber) != 10)
+            {
+                system("cls");
+                printf("\n\t%40c(!) So dien thoai khong hop le - Nhap lai (!)\n\a", ' ');
+                printf("\n%50c(?) Nhap so dien thoai (10 so): ", ' ');
+                scanf("%s", &r.phoneNumber);
+            }
+        } while (strlen(r.phoneNumber) <= 0 || strlen(r.phoneNumber) > 10 || strlen(r.phoneNumber) != 10);
+        system("cls");
     } while (isExitPhoneNumber(roomRenters, r.phoneNumber));
+    // nếu số CCCD đã tồn tại - cho nhập lại
     do
     {
         if (isExitIdentityCard(roomRenters, r.identityCard))
@@ -137,9 +150,20 @@ void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
             system("cls");
             printf("\n\t%40c(!) Da ton tai nguoi thue voi so CCCD nay (!)\n\a", ' ');
             printf("\n%50c(?) Nhap lai so CCCD khac: ", ' ');
-            fflush(stdin);
-            gets(r.identityCard);
+            scanf("%s", &r.identityCard);
         }
+        // nhập lại mà ko hợp lệ - nhập lại tiếp
+        do
+        {
+            if ((strlen(r.identityCard) <= 0 || strlen(r.identityCard) > 12) || strlen(r.identityCard) != 12)
+            {
+                system("cls");
+                printf("\n\t%40c(!) So CCCD khong hop le - Nhap lai (!)\n\a", ' ');
+                printf("\n%50c(?) Nhap so CCCD (12 so): ", ' ');
+                scanf("%s", &r.identityCard);
+            }
+        } while ((strlen(r.identityCard) <= 0 || strlen(r.identityCard) > 12) || strlen(r.identityCard) != 12);
+        system("cls");
     } while (isExitIdentityCard(roomRenters, r.identityCard));
     system("cls");
     printf("\n\t%50cTHONG TIN NGUOI THUE VUA NHAP\n", ' ');

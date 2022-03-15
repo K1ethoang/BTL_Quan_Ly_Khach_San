@@ -15,7 +15,7 @@ int main()
         printf("%50c|                DANG NHAP                 |\n");
         printf("%50c+ ---------------------------------------- +\n");
         printf("%50c  (?) Tai Khoan:  ");
-        gets(username);
+        scanf("%s", &username);
         fflush(stdin);
         printf("%50c  (?) Mat Khau (4 ki tu):  ");
         for (int i = 0; i < 4; i++)
@@ -32,11 +32,12 @@ int main()
         {
             if (time == 0)
             {
-                printf("\n\n\t%30c (!) Chuong trinh tu dong thoat vi ban dang nhap qua so lan cho phep (!)\n");
+                printf("\n\n\t%30c (!) Chuong trinh tu dong thoat vi ban dang nhap qua so lan cho phep (!)\n\a", ' ');
+                system("pause");
                 break;
             }
             else
-                printf("\n\n%50c       (!) Ban con %d lan thu (!)             \n", ' ', time--);
+                printf("\n\n%60c(!) Ban con %d lan thu (!)\n\a", ' ', time--);
             system("pause");
         }
     }

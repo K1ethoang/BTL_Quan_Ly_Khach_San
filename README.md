@@ -17,9 +17,9 @@
 - [Slide](./Báo%20cáo/)
  
 # 3. Code
-- Được viết trên Visual Studio Code (VSCode)
+- Được viết trên Visual Studio Code (VSCode) - bạn có thể xem cách cài đặt vscode để code C/C++ -> [Ở đây](https://www.youtube.com/watch?v=BOa0Enkaw9c)
 - Ngôn ngữ: C
 - Build file [main.cpp](Code/Program/main.cpp) -> main.exe rồi chạy file main.exe
 - Đăng nhập
   - Tài khoản: nhom3
-  - Mat khẩu: 1234
+  - Mật khẩu: 1234

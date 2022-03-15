@@ -2,13 +2,17 @@
 #include "Rooms.hpp"
 
 void menu();
+void loading();
+void information();
+void importRooms(Room rooms[], int &n);
 
 void menu()
 {
+    loading();
     int choose, n;
     bool exit = false;
     Room *rooms = (Room *)calloc(20, sizeof(Room));
-    readRooms(rooms, n);
+    importRooms(rooms, n);
     RoomRenters roomRenters;
     createList(roomRenters);
     printf("\n");
@@ -37,7 +41,6 @@ void menu()
         {
             system("cls");
             printf("\n\t%50c1. THEM NGUOI THUE\n");
-            printf("\n\t%50c() Nhap thong tin nguoi thue ()\n");
             system("pause");
             addARoomRenter(roomRenters, rooms, n);
             break;
@@ -48,7 +51,7 @@ void menu()
             RoomRenter r;
             printf("\n\t%50c2. XEM DANH SACH NGUOI THUE\n");
             if (roomRenters.pHead == NULL)
-                printf("\n\t%50c() Danh sach nguoi thue trong ()\n\a", ' ');
+                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a");
             else
                 outputRoomRenters(roomRenters);
             system("pause");
@@ -59,13 +62,12 @@ void menu()
             system("cls");
             printf("\n\t%50c3. CHINH SUA NGUOI THUE\n");
             if (roomRenters.pHead == NULL)
-                printf("\n\t%50c() Danh sach nguoi thue trong ()\n\a", ' ');
+                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a");
             else
             {
                 char phoneNumber[15];
                 printf("\n%50cNhap SDT cua nguoi thue can sua: ");
-                fflush(stdin);
-                gets(phoneNumber);
+                scanf("%s", &phoneNumber);
                 UpdateRoomRenter(roomRenters, rooms, n, phoneNumber);
             }
             system("pause");
@@ -76,13 +78,12 @@ void menu()
             system("cls");
             printf("\n\t%50c4. THANH TOAN\n");
             if (roomRenters.pHead == NULL)
-                printf("\n\t%50c() Danh sach nguoi thue trong ()\n\a", ' ');
+                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a");
             else
             {
                 char phoneNumber[15];
                 printf("\n%50cNhap SDT cua nguoi thue can thanh toan: ");
-                fflush(stdin);
-                gets(phoneNumber);
+                scanf("%s", &phoneNumber);
                 deleteARoomRenter(roomRenters, phoneNumber);
             }
             system("pause");
@@ -160,6 +161,7 @@ void menu()
             break;
         }
         case 0:
+            information();
             exit = true;
             break;
         default:
@@ -168,6 +170,45 @@ void menu()
             break;
         }
     } while (!exit);
-    system("pause");
     free(rooms);
+}
+
+void loading()
+{
+    char c[60] = "###############################################";
+    printf("\n%48c[", ' ');
+    for (int i = 0; i < 50; i++)
+    {
+        Sleep(200);
+        printf("%c", c[i]);
+    }
+    printf("]\n");
+    printf("\n%50c(*) Dang nhap thanh cong (*)\n");
+    system("pause");
+}
+
+void information()
+{
+    system("cls");
+    printf("%50c###########################################\n");
+    printf("%50c##              GIANG VIEN               ##\n");
+    printf("%50c##       Tran Thi Dung                   ##\n");
+    printf("%50c##---------------------------------------##\n");
+    printf("%50c##              THANH VIEN               ##\n");
+    printf("%50c##       Hoang Gia Kiet (Truong nhom)    ##\n");
+    printf("%50c##       Nguyen Thi Thanh Nhu            ##\n");
+    printf("%50c##       Le Trung Quyen                  ##\n");
+    printf("%50c##       Vo Thi Tuong Vi                 ##\n");
+    printf("%50c##---------------------------------------##\n");
+    printf("%50c##             XIN CAM ON                ##\n");
+    printf("%50c###########################################\n");
+    system("pause");
+}
+
+void importRooms(Room rooms[], int &n)
+{
+    system("cls");
+    printf("\n\t%40c(*) Dang nhap du lieu cac phong (*)\n", ' ');
+    Sleep(2000); // delay 2s
+    readRooms(rooms, n);
 }
