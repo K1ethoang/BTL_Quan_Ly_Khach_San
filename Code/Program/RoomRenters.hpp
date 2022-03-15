@@ -26,6 +26,8 @@ void outputRoomRenters(RoomRenters roomRenters);                                
 void swapTwoRoomRenters(RoomRenter &roomRenter1, RoomRenter &roomRenter2);               // hoán vị 2 người thuê
 void UpdateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber); // chỉnh sửa danh sách người thuê
 void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber);                     // xoá 1 người thuê
+void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n);                     // đọc danh sách người thuê
+void writeRoomRenters(RoomRenters roomRenters);                                          // ghi danh sách người thuê
 
 void createList(RoomRenters &roomRenters)
 {
@@ -246,4 +248,41 @@ void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber)
             }
         }
     }
+}
+
+void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
+{
+    int count = 1;
+    FILE *fileIn = fopen("../File/roomRenter/roomRenter.in", "r");
+    if (fileIn == NULL)
+        printf("\n%50c(!) Loi khi mo file (!)\n\a", ' ');
+    else
+    { // lấy kí tự \n trước có sẵn trong file
+        while (!feof(fileIn))
+        {
+            fflush(stdin);
+            RoomRenter r;
+            readARoomRenter(fileIn, r, rooms, n);
+            addNodeInTail(roomRenters, r);
+            printf("\n%50c(*) Doc ban ghi thu %d (*)\n", ' ', count++);
+        }
+    }
+    fclose(fileIn);
+}
+
+void writeRoomRenters(RoomRenters roomRenters)
+{
+    int count = 1;
+    FILE *fileOut = fopen("../File/roomRenter/roomRenter.out", "w");
+    if (fileOut == NULL)
+        printf("\n%50c(!) Loi khi mo file (!)\n\a", ' ');
+    else
+    {
+        for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
+        {
+            writeARoomRenter(fileOut, t->data);
+            printf("\n%50c(*) Ban ghi thu %d (*)\n", ' ', count++);
+        }
+    }
+    fclose(fileOut);
 }
