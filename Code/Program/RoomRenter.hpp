@@ -27,7 +27,8 @@ void chooseRoom(RoomRenter &roomRenter, Room rooms[], int n);                   
 void inputARoomRenter(RoomRenter &roomRenter, Room rooms[], int n);              // nhập 1 người thuê
 void outputARoomRenterByVertical(RoomRenter roomRenter);                         // in 1 người thuê theo chiều dọc
 void outputARoomRenterByHorizontal(RoomRenter roomRenter);                       // in 1 người thuê theo chiều ngang - có định dạng in
-void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n); // đọc 1 người thuê
+void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n); // đọc 1 người thuê từ file
+void writeARoomRenter(FILE *fileOut, RoomRenter roomRenter);                     // ghi 1 người thuê ra file
 
 bool isValidDate(int day, int month, int year) // kiểm tra ngày nhập
 {
@@ -166,7 +167,7 @@ void outputARoomRenterByVertical(RoomRenter roomRenter)
     printf("\n%50cHo va ten: %s", ' ', roomRenter.fullName);
     printf("\n%50cNgay sinh: %d/%d/%d", ' ', roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year);
     char sex[4];
-    if (sex == 0)
+    if (roomRenter.sex == 0) // kiếm tra giới tính để in ra dạng chữ
         strcpy(sex, "Nu");
     else
         strcpy(sex, "Nam");
@@ -179,7 +180,7 @@ void outputARoomRenterByVertical(RoomRenter roomRenter)
 void outputARoomRenterByHorizontal(RoomRenter roomRenter)
 {
     char sex[4];
-    if (sex == 0)
+    if (roomRenter.sex == 0)
         strcpy(sex, "Nu");
     else
         strcpy(sex, "Nam");
@@ -195,5 +196,16 @@ void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n)
     fscanf(fileIn, "%d", &roomRenter.sex);
     fscanf(fileIn, "%s%s", &roomRenter.phoneNumber, &roomRenter.identityCard);
     fscanf(fileIn, "%d", &roomNumber);
+    fgetc(fileIn);
+    fgetc(fileIn);                                   // lấy kí tự '\n' cuối cùng
     roomRenter.room = getRoom(rooms, n, roomNumber); // lấy số phòng lưu tạm để trả về phòng của số phòng đó
+}
+
+void writeARoomRenter(FILE *fileOut, RoomRenter roomRenter)
+{
+    fprintf(fileOut, "%s\n", roomRenter.fullName);
+    fprintf(fileOut, "%d %d %d\n", roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year);
+    fprintf(fileOut, "%d\n", roomRenter.sex);
+    fprintf(fileOut, "%s\n%s\n", roomRenter.phoneNumber, roomRenter.identityCard);
+    fprintf(fileOut, "%d\n", roomRenter.room->number);
 }
