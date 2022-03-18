@@ -199,7 +199,7 @@ void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n)
     fscanf(fileIn, "%d", &roomNumber);
     fgetc(fileIn);                                   // lấy kí tự '\n' -> tránh lỗi
     roomRenter.room = getRoom(rooms, n, roomNumber); // lấy số phòng lưu tạm để trả về phòng của số phòng đó
-    roomRenter.room->isActive = 1;                   // cập nhật lại tình trạng phòng -> 1 (phòng đầy)
+    // roomRenter.room->isActive = 1;                   // cập nhật lại tình trạng phòng -> 1 (phòng đầy)
 }
 
 void writeARoomRenter(FILE *fileOut, RoomRenter roomRenter)

@@ -28,6 +28,7 @@ void UpdateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phone
 void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber);                     // xoá 1 người thuê
 void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n);                     // đọc danh sách người thuê
 void writeRoomRenters(RoomRenters roomRenters);                                          // ghi danh sách người thuê
+void clearRoomRenters(RoomRenters &roomRenters);                                         // giải phóng vùng nhớ của ds người thuê
 
 void createList(RoomRenters &roomRenters)
 {
@@ -167,7 +168,7 @@ void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
         } while ((strlen(r.identityCard) <= 0 || strlen(r.identityCard) > 12) || strlen(r.identityCard) != 12);
         system("cls");
     } while (isExitIdentityCard(roomRenters, r.identityCard));
-    r.room->isActive = 1; // cập nhật tình trạng phòng -> đầy
+    r.room->isActive = 1; // cập nhật tình trạng phòng -> 1 (phòng đầy)
     system("cls");
     printf("\n\t%50cTHONG TIN NGUOI THUE VUA NHAP\n", ' ');
     outputARoomRenterByVertical(r);
@@ -220,14 +221,14 @@ void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber)
     // nếu phần tử nằm đầu
     if (strcmp(roomRenters.pHead->data.phoneNumber, phoneNumber) == 0)
     {
-        roomRenters.pHead->data.room->isActive = 0;
+        roomRenters.pHead->data.room->isActive = 0; // cập nhật lại tình trạng phòng về 0: phòng trống
         removeNodeInHead(roomRenters);
         printf("\n\t%40c(*) Thanh toan thanh cong (*)\n", ' ');
     }
     // nếu phần tử nằm cuối
     else if (strcmp(roomRenters.pTail->data.phoneNumber, phoneNumber) == 0)
     {
-        roomRenters.pTail->data.room->isActive = 0; // cập nhật lại tình trạng phòng về 0: phòng trống
+        roomRenters.pTail->data.room->isActive = 0;
         removeNodeInTail(roomRenters);
         printf("\n\t%40c(*) Thanh toan thanh cong (*)\n", ' ');
     }
@@ -276,7 +277,7 @@ void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
                     RoomRenter r;
                     readARoomRenter(fileIn, r, rooms, n);
                     addNodeInTail(roomRenters, r);
-                    printf("\n%50c(*) Doc ban ghi thu %d (*)\n", ' ', count++);
+                    printf("\n%55c(*) Doc ban ghi thu %d (*)\n", ' ', count++);
                 }
             }
         }
@@ -295,8 +296,20 @@ void writeRoomRenters(RoomRenters roomRenters)
         for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
         {
             writeARoomRenter(fileOut, t->data);
-            printf("\n%50c(*) Ban ghi thu %d (*)\n", ' ', count++);
+            Sleep(50); // delay 0.05s
+            printf("\n%55c(*) Ban ghi thu %d (*)\n", ' ', count++);
         }
     }
     fclose(fileOut);
+}
+
+void clearRoomRenters(RoomRenters &roomRenters)
+{
+    Node *t = NULL;
+    while (roomRenters.pHead != NULL)
+    {
+        t = roomRenters.pHead;
+        roomRenters.pHead = roomRenters.pHead->pNext;
+        free(t);
+    }
 }

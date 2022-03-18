@@ -6,14 +6,15 @@ void loading();
 void information();
 void importRooms(Room rooms[], int &n);
 void importRoomRenters(RoomRenters &roomRenters, Room rooms[], int n);
+void saveFile(RoomRenters roomRenters, Room rooms[], int n);
 
 void menu()
 {
     int choose, n;
-    bool exit = false;
-    Room *rooms = (Room *)calloc(100, sizeof(Room));
-    importRooms(rooms, n);
+    bool exit = false, fileSaved = false;
+    Room *rooms = (Room *)calloc(100, sizeof(Room)); // mảng động
     RoomRenters roomRenters;
+    importRooms(rooms, n);
     importRoomRenters(roomRenters, rooms, n);
     printf("\n");
     do
@@ -29,6 +30,8 @@ void menu()
         printf("%50c##      5. Xem tinh trang phong                   ##\n");
         printf("%50c##      6. Sap xep danh sach tang dan theo ten    ##\n");
         printf("%50c##      7. Tim kiem nguoi thue theo ten           ##\n");
+        printf("%50c##      8. In danh sach nguoi thue                ##\n");
+        printf("%50c##      9. Luu thay doi                           ##\n");
         printf("%50c##------------------------------------------------##\n");
         printf("%50c##            0. Thoat chuong trinh               ##\n");
         printf("%50c####################################################\n");
@@ -160,23 +163,74 @@ void menu()
             system("pause");
             break;
         }
-        case 0:
-            information();
-            exit = true;
+        case 8:
+        {
+            system("cls");
+            printf("\n\t%50c8. IN DANH SACH NGUOI THUE\n");
+            system("pause");
             break;
+        }
+        case 9:
+        {
+            system("cls");
+            printf("\n\t%50c9. LUU THAY DOI\n");
+            saveFile(roomRenters, rooms, n);
+            fileSaved = true;
+            system("pause");
+            break;
+        }
+        case 0:
+        {
+            if (fileSaved)
+            {
+                information();
+                printf("\n\t%50c(*) Thoat chuong trinh 5s (*)\n", ' ');
+                Sleep(5000);
+                exit = true;
+            }
+            else
+            {
+                system("cls");
+                printf("\n\t%50c0. THOAT CHUONG TRINH\n");
+                char c;
+                printf("\n%50c(!) Ban chua luu thay doi (!)\n", ' ');
+                do
+                {
+                    fflush(stdin);
+                    printf("\n%50c(?) Van muon thoat ma khong luu (y/n) (?): ", ' ');
+                    scanf("%c", &c);
+                    if (c != 'y' && c != 'n')
+                        printf("\n%50c(!) Lua chon khong hop le (!) - Nhap lai (!)", ' ');
+                    else
+                    {
+                        if (c == 'y')
+                        {
+                            information();
+                            printf("\n\t%50c(*) Thoat chuong trinh sau 5s (*)\n", ' ');
+                            Sleep(5000);
+                            exit = true;
+                        }
+                        else
+                            break;
+                    }
+                } while (c != 'y' && c != 'n');
+            }
+            break;
+        }
         default:
             printf("\n\t%50c(!) Lua chon khong hop le (!)\n\a");
             system("pause");
             break;
         }
-    } while (!exit);
-    free(rooms);
+    } while (!exit);               // exit == true
+    free(rooms);                   // giải phóng bộ nhớ của ds phòng
+    clearRoomRenters(roomRenters); // giải phóng bộ nhớ của ds người thuê
 }
 
 void loading()
 {
     char c[60] = "###############################################";
-    printf("\n%48c[", ' ');
+    printf("\n%46c[", ' ');
     for (int i = 0; i < strlen(c); i++)
     {
         Sleep(50); // delay 0.05s
@@ -202,13 +256,12 @@ void information()
     printf("%50c##---------------------------------------##\n");
     printf("%50c##             XIN CAM ON                ##\n");
     printf("%50c###########################################\n");
-    system("pause");
 }
 
 void importRooms(Room rooms[], int &n)
 {
     system("cls");
-    printf("\n\t%40c(*) Dang nhap du lieu cac phong (*)\n", ' ');
+    printf("\n\t%40c(*) Dang nhap du lieu danh sach phong (*)\n", ' ');
     Sleep(2000); // delay 2s
     readRooms(rooms, n);
 }
@@ -217,7 +270,17 @@ void importRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
 {
     createList(roomRenters);
     system("cls");
-    printf("\n\t%40c(*) Dang nhap du lieu cac nguoi thue (*)\n", ' ');
+    printf("\n\t%40c(*) Dang nhap du lieu danh sach nguoi thue (*)\n", ' ');
     Sleep(2000); // delay 2s
     readRoomRenters(roomRenters, rooms, n);
+}
+
+void saveFile(RoomRenters roomRenters, Room rooms[], int n)
+{
+    printf("\n\t%40c(*) Dang luu du lieu cac phong (*)\n", ' ');
+    Sleep(2000); // delay 2s
+    writeRooms(rooms, n);
+    printf("\n\t%40c(*) Dang luu du lieu cac nguoi thue (*)\n", ' ');
+    Sleep(2000); // delay 2s
+    writeRoomRenters(roomRenters);
 }
