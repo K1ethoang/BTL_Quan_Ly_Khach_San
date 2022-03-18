@@ -24,7 +24,7 @@ void readRooms(Room rooms[], int &n)
             readARoom(fileIn, r);
             rooms[n++] = r; // đưa phòng vừa đọc vào mảng
             Sleep(100);     // delay 0.1s
-            printf("\n%50c(*) Doc ban ghi thu %d (*)\n", ' ', n);
+            printf("\n%55c(*) Doc ban ghi thu %d (*)\n", ' ', n);
         }
     }
     fclose(fileIn);
@@ -42,7 +42,8 @@ void writeRooms(Room rooms[], int &n)
         {
             fflush(stdin);
             writeARoom(fileOut, rooms[i]);
-            printf("\n%50c(*) Ban ghi thu %d (*)\n", ' ', count++);
+            Sleep(50); // delay 0.05s
+            printf("\n%55c(*) Ban ghi thu %d (*)\n", ' ', count++);
         }
     }
     fclose(fileOut);
