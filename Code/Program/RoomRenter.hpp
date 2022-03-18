@@ -197,6 +197,8 @@ void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n)
     fscanf(fileIn, "%d", &roomRenter.sex);
     fscanf(fileIn, "%s%s", &roomRenter.phoneNumber, &roomRenter.identityCard);
     fscanf(fileIn, "%d", &roomNumber);
+    fgetc(fileIn);
+    fgetc(fileIn);                                   // lấy kí tự '\n' cuối cùng
     roomRenter.room = getRoom(rooms, n, roomNumber); // lấy số phòng lưu tạm để trả về phòng của số phòng đó
     fgetc(fileIn);
     roomRenter.room->isActive = 1; // cập nhật lại tình trạng phòng -> 1 (phòng đầy)
