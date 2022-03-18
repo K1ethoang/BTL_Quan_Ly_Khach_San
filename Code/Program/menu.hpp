@@ -179,12 +179,12 @@ void loading()
     printf("\n%48c[", ' ');
     for (int i = 0; i < strlen(c); i++)
     {
-        Sleep(100);
+        Sleep(50); // delay 0.05s
         printf("%c", c[i]);
     }
     printf("]\n");
     printf("\n%50c(*) Dang nhap thanh cong (*)\n");
-    system("pause");
+    Sleep(2000);
 }
 
 void information()

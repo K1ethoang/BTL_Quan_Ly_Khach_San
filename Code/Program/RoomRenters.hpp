@@ -261,7 +261,6 @@ void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
     if (fileIn == NULL)
         printf("\n%50c(!) Loi khi mo file (!)\n\a", ' ');
     else
-<<<<<<< HEAD
     {
         fgetc(fileIn); // đọc kí tự '\n' ở dòng đầu tiên
         while (!feof(fileIn))
@@ -270,16 +269,16 @@ void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
             readARoomRenter(fileIn, r, rooms, n);
             addNodeInTail(roomRenters, r);
             Sleep(100); // delay 0.1s
-=======
-    { // lấy kí tự \n trước có sẵn trong file
-        while (!feof(fileIn))
-        {
-            fflush(stdin);
-            RoomRenter r;
-            readARoomRenter(fileIn, r, rooms, n);
-            addNodeInTail(roomRenters, r);
->>>>>>> 54b09424cc92ac06193a4e55b4742ca904a9c5c0
-            printf("\n%50c(*) Doc ban ghi thu %d (*)\n", ' ', count++);
+            {
+                while (!feof(fileIn))
+                {
+                    fflush(stdin);
+                    RoomRenter r;
+                    readARoomRenter(fileIn, r, rooms, n);
+                    addNodeInTail(roomRenters, r);
+                    printf("\n%50c(*) Doc ban ghi thu %d (*)\n", ' ', count++);
+                }
+            }
         }
     }
     fclose(fileIn);
@@ -288,11 +287,7 @@ void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
 void writeRoomRenters(RoomRenters roomRenters)
 {
     int count = 1;
-<<<<<<< HEAD
     FILE *fileOut = fopen("../File/roomRenter/roomRenter.in", "w");
-=======
-    FILE *fileOut = fopen("../File/roomRenter/roomRenter.out", "w");
->>>>>>> 54b09424cc92ac06193a4e55b4742ca904a9c5c0
     if (fileOut == NULL)
         printf("\n%50c(!) Loi khi mo file (!)\n\a", ' ');
     else
@@ -304,8 +299,4 @@ void writeRoomRenters(RoomRenters roomRenters)
         }
     }
     fclose(fileOut);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 54b09424cc92ac06193a4e55b4742ca904a9c5c0
