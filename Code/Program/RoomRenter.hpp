@@ -27,7 +27,8 @@ void chooseRoom(RoomRenter &roomRenter, Room rooms[], int n);                   
 void inputARoomRenter(RoomRenter &roomRenter, Room rooms[], int n);              // nhập 1 người thuê
 void outputARoomRenterByVertical(RoomRenter roomRenter);                         // in 1 người thuê theo chiều dọc
 void outputARoomRenterByHorizontal(RoomRenter roomRenter);                       // in 1 người thuê theo chiều ngang - có định dạng in
-void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n); // đọc 1 người thuê
+void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n); // đọc 1 người thuê từ file
+void writeARoomRenter(FILE *fileOut, RoomRenter roomRenter);                     // ghi 1 người thuê ra file
 
 bool isValidDate(int day, int month, int year) // kiểm tra ngày nhập
 {
@@ -102,7 +103,7 @@ bool isValidRoom(Room rooms[], int n, int roomNumber)
 {
     for (int i = 0; i < n; i++)
     {
-        if (rooms[i].number == roomNumber)
+        if (rooms[i].number == roomNumber && rooms[i].isActive == 0)
             return 1;
     }
     return 0;
@@ -114,7 +115,7 @@ void chooseRoom(RoomRenter &roomRenter, Room rooms[], int n)
     do
     {
         system("cls");
-        outputRooms(rooms, n);
+        outputRoomsAreEmtpy(rooms, n);
         printf("\n%50c(?) Nhap so phong: ", ' ');
         scanf("%d", &roomNumber);
         if (!isValidRoom(rooms, n, roomNumber))
@@ -158,6 +159,7 @@ void inputARoomRenter(RoomRenter &roomRenter, Room rooms[], int n)
     } while ((strlen(roomRenter.identityCard) <= 0 || strlen(roomRenter.identityCard) > 12) || strlen(roomRenter.identityCard) != 12);
     system("cls");
     chooseRoom(roomRenter, rooms, n);
+    roomRenter.room->isActive = 1; // cập nhật lại tình trạng phòng -> 1 (phòng đầy)
     system("cls");
 }
 
@@ -166,7 +168,7 @@ void outputARoomRenterByVertical(RoomRenter roomRenter)
     printf("\n%50cHo va ten: %s", ' ', roomRenter.fullName);
     printf("\n%50cNgay sinh: %d/%d/%d", ' ', roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year);
     char sex[4];
-    if (sex == 0)
+    if (roomRenter.sex == 0) // kiếm tra giới tính để in ra dạng chữ
         strcpy(sex, "Nu");
     else
         strcpy(sex, "Nam");
@@ -179,7 +181,7 @@ void outputARoomRenterByVertical(RoomRenter roomRenter)
 void outputARoomRenterByHorizontal(RoomRenter roomRenter)
 {
     char sex[4];
-    if (sex == 0)
+    if (roomRenter.sex == 0)
         strcpy(sex, "Nu");
     else
         strcpy(sex, "Nam");
@@ -196,4 +198,15 @@ void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n)
     fscanf(fileIn, "%s%s", &roomRenter.phoneNumber, &roomRenter.identityCard);
     fscanf(fileIn, "%d", &roomNumber);
     roomRenter.room = getRoom(rooms, n, roomNumber); // lấy số phòng lưu tạm để trả về phòng của số phòng đó
+    fgetc(fileIn);
+    roomRenter.room->isActive = 1; // cập nhật lại tình trạng phòng -> 1 (phòng đầy)
+}
+
+void writeARoomRenter(FILE *fileOut, RoomRenter roomRenter)
+{
+    fprintf(fileOut, "\n%s", roomRenter.fullName);
+    fprintf(fileOut, "\n%d %d %d", roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year);
+    fprintf(fileOut, "\n%d", roomRenter.sex);
+    fprintf(fileOut, "\n%s\n%s", roomRenter.phoneNumber, roomRenter.identityCard);
+    fprintf(fileOut, "\n%d", roomRenter.room->number);
 }

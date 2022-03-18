@@ -92,9 +92,9 @@ void outputARoomByVertical(Room room)
     printf("\n%50cSo phong: %d", ' ', room.number);
     printf("\n%50cLoai phong: %s", ' ', room.type);
     char roomStatus[20];
-    if (room.isActive) // isActive = 1
+    if (room.isActive == 1) // isActive = 1
         strcpy(roomStatus, "Day");
-    else // isActive = 1
+    else // isActive = 0
         strcpy(roomStatus, "Trong");
     printf("\n%50cTinh trang: %s", ' ', roomStatus);
 }
@@ -102,9 +102,9 @@ void outputARoomByVertical(Room room)
 void outputARoomByHorizontal(Room room)
 {
     char roomStatus[20];
-    if (room.isActive) // isActive = 1
+    if (room.isActive == 1) // isActive = 1
         strcpy(roomStatus, "Day");
-    else // isActive = 1
+    else // isActive = 0
         strcpy(roomStatus, "Trong");
     printf("|    %-3d     |    %-11s |    %-11s |\n", room.number, room.type, roomStatus);
 }

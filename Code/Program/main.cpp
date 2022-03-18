@@ -25,6 +25,8 @@ int main()
         }
         if (strcmp(password, checkPassword) == 0 && strcmp(username, checkUsername) == 0)
         {
+            fflush(stdin);
+            loading();
             menu();
             break;
         }

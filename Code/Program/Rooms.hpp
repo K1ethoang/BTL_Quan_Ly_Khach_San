@@ -4,8 +4,10 @@
 
 void readRooms(Room rooms[], int &n);               // đọc danh sách các phòng
 void writeRooms(Room rooms[], int &n);              // ghi danh sách các phòng
-void outputRooms(Room rooms[], int n);              // xuất danh sách các phòng
+void outputRooms(Room rooms[], int n);              // xuất danh sách các phòng (cả trống và đầy)
 Room *getRoom(Room rooms[], int n, int roomNumber); // lấy vị trí của phòng
+void outputRoomsAreWorking(Room rooms[], int n);    // xuất danh sách các phòng đầy
+void outputRoomsAreEmtpy(Room rooms[], int n);      // xuất danh sách các phòng trống
 
 void readRooms(Room rooms[], int &n)
 {
@@ -69,4 +71,40 @@ Room *getRoom(Room rooms[], int n, int roomNumber)
             return &rooms[i];
     }
     return NULL;
+}
+
+void outputRoomsAreWorking(Room rooms[], int n)
+{
+    int count = 1;
+    printf("\n");
+    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+    printf("%50c|  STT  |  So phong  |   Loai phong   |   Tinh trang   |\n", ' ');
+    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+    for (int i = 0; i < n; i++)
+    {
+        if (rooms[i].isActive)
+        {
+            printf("%50c|  %-5d", ' ', count++);
+            outputARoomByHorizontal(rooms[i]);
+        }
+    }
+    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+}
+
+void outputRoomsAreEmtpy(Room rooms[], int n)
+{
+    int count = 1;
+    printf("\n");
+    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+    printf("%50c|  STT  |  So phong  |   Loai phong   |   Tinh trang   |\n", ' ');
+    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+    for (int i = 0; i < n; i++)
+    {
+        if (rooms[i].isActive == 0)
+        {
+            printf("%50c|  %-5d", ' ', count++);
+            outputARoomByHorizontal(rooms[i]);
+        }
+    }
+    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
 }

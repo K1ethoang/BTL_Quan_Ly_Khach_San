@@ -5,16 +5,16 @@ void menu();
 void loading();
 void information();
 void importRooms(Room rooms[], int &n);
+void importRoomRenters(RoomRenters &roomRenters, Room rooms[], int n);
 
 void menu()
 {
-    loading();
     int choose, n;
     bool exit = false;
-    Room *rooms = (Room *)calloc(20, sizeof(Room));
+    Room *rooms = (Room *)calloc(100, sizeof(Room));
     importRooms(rooms, n);
     RoomRenters roomRenters;
-    createList(roomRenters);
+    importRoomRenters(roomRenters, rooms, n);
     printf("\n");
     do
     {
@@ -113,7 +113,7 @@ void menu()
                 {
                     system("cls");
                     printf("\n\t%50c1. PHONG TRONG\n");
-                    printf("\nChua co code\n");
+                    outputRoomsAreEmtpy(rooms, n);
                     system("pause");
                     break;
                 }
@@ -121,7 +121,7 @@ void menu()
                 {
                     system("cls");
                     printf("\n\t%50c2. PHONG DAY\n");
-                    printf("\nChua co code\n");
+                    outputRoomsAreWorking(rooms, n);
                     system("pause");
                     break;
                 }
@@ -177,9 +177,9 @@ void loading()
 {
     char c[60] = "###############################################";
     printf("\n%48c[", ' ');
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < strlen(c); i++)
     {
-        Sleep(200);
+        Sleep(100);
         printf("%c", c[i]);
     }
     printf("]\n");
@@ -211,4 +211,13 @@ void importRooms(Room rooms[], int &n)
     printf("\n\t%40c(*) Dang nhap du lieu cac phong (*)\n", ' ');
     Sleep(2000); // delay 2s
     readRooms(rooms, n);
+}
+
+void importRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
+{
+    createList(roomRenters);
+    system("cls");
+    printf("\n\t%40c(*) Dang nhap du lieu cac nguoi thue (*)\n", ' ');
+    Sleep(2000); // delay 2s
+    readRoomRenters(roomRenters, rooms, n);
 }

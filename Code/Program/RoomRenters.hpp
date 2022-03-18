@@ -26,6 +26,8 @@ void outputRoomRenters(RoomRenters roomRenters);                                
 void swapTwoRoomRenters(RoomRenter &roomRenter1, RoomRenter &roomRenter2);               // hoán vị 2 người thuê
 void UpdateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber); // chỉnh sửa danh sách người thuê
 void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber);                     // xoá 1 người thuê
+void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n);                     // đọc danh sách người thuê
+void writeRoomRenters(RoomRenters roomRenters);                                          // ghi danh sách người thuê
 
 void createList(RoomRenters &roomRenters)
 {
@@ -165,6 +167,7 @@ void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
         } while ((strlen(r.identityCard) <= 0 || strlen(r.identityCard) > 12) || strlen(r.identityCard) != 12);
         system("cls");
     } while (isExitIdentityCard(roomRenters, r.identityCard));
+    r.room->isActive = 1; // cập nhật tình trạng phòng -> đầy
     system("cls");
     printf("\n\t%50cTHONG TIN NGUOI THUE VUA NHAP\n", ' ');
     outputARoomRenterByVertical(r);
@@ -217,12 +220,14 @@ void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber)
     // nếu phần tử nằm đầu
     if (strcmp(roomRenters.pHead->data.phoneNumber, phoneNumber) == 0)
     {
+        roomRenters.pHead->data.room->isActive = 0;
         removeNodeInHead(roomRenters);
         printf("\n\t%40c(*) Thanh toan thanh cong (*)\n", ' ');
     }
     // nếu phần tử nằm cuối
     else if (strcmp(roomRenters.pTail->data.phoneNumber, phoneNumber) == 0)
     {
+        roomRenters.pTail->data.room->isActive = 0; // cập nhật lại tình trạng phòng về 0: phòng trống
         removeNodeInTail(roomRenters);
         printf("\n\t%40c(*) Thanh toan thanh cong (*)\n", ' ');
     }
@@ -237,6 +242,7 @@ void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber)
             {
                 if (strcmp(t->data.phoneNumber, phoneNumber) == 0)
                 {
+                    t->data.room->isActive = 0;
                     g->pNext = t->pNext; // cập nhật lại node nằm trước node cần xoá liên kết với node kế tiếp của nó
                     free(t);
                     printf("\n\t%40c(*) Thanh toan thanh cong (*)\n", ' ');
@@ -246,4 +252,42 @@ void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber)
             }
         }
     }
+}
+
+void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
+{
+    int count = 1;
+    FILE *fileIn = fopen("../File/roomRenter/roomRenter.in", "r");
+    if (fileIn == NULL)
+        printf("\n%50c(!) Loi khi mo file (!)\n\a", ' ');
+    else
+    {
+        fgetc(fileIn); // đọc kí tự '\n' ở dòng đầu tiên
+        while (!feof(fileIn))
+        {
+            RoomRenter r;
+            readARoomRenter(fileIn, r, rooms, n);
+            addNodeInTail(roomRenters, r);
+            Sleep(100); // delay 0.1s
+            printf("\n%50c(*) Doc ban ghi thu %d (*)\n", ' ', count++);
+        }
+    }
+    fclose(fileIn);
+}
+
+void writeRoomRenters(RoomRenters roomRenters)
+{
+    int count = 1;
+    FILE *fileOut = fopen("../File/roomRenter/roomRenter.in", "w");
+    if (fileOut == NULL)
+        printf("\n%50c(!) Loi khi mo file (!)\n\a", ' ');
+    else
+    {
+        for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
+        {
+            writeARoomRenter(fileOut, t->data);
+            printf("\n%50c(*) Ban ghi thu %d (*)\n", ' ', count++);
+        }
+    }
+    fclose(fileOut);
 }
