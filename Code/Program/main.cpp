@@ -3,22 +3,21 @@
 
 int main()
 {
-    system("color 0e");
+    system("color 0B");
     char username[20], checkUsername[20] = "nhom3";
     char password[5], checkPassword[5] = "1234";
     int time = 3;
-
     while (1)
     {
         system("cls");
-        printf("%50c+ ---------------------------------------- +\n");
-        printf("%50c|                DANG NHAP                 |\n");
-        printf("%50c+ ---------------------------------------- +\n");
-        printf("%50c  (?) Tai Khoan:  ");
+        printf("%50c+ ---------------------------------------- +\n", ' ');
+        printf("%50c|                DANG NHAP                 |\n", ' ');
+        printf("%50c+ ---------------------------------------- +\n", ' ');
+        printf("%50c  (?) Tai Khoan:  ", ' ');
         scanf("%s", &username);
         fflush(stdin);
-        printf("%50c  (?) Mat Khau (4 ki tu):  ");
-        for (int i = 0; i < 4; i++)
+        printf("%50c  (?) Mat Khau (%d ki tu):  ", ' ', strlen(checkPassword));
+        for (int i = 0; i < strlen(checkPassword); i++)
         {
             password[i] = getch();
             printf("%c", '*');
