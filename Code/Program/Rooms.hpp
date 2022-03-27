@@ -8,12 +8,13 @@ void outputRooms(Room rooms[], int n);              // xuất danh sách các ph
 Room *getRoom(Room rooms[], int n, int roomNumber); // lấy vị trí của phòng
 void outputRoomsAreWorking(Room rooms[], int n);    // xuất danh sách các phòng đầy
 void outputRoomsAreEmtpy(Room rooms[], int n);      // xuất danh sách các phòng trống
+bool outOfRooms(Room rooms[], int n);               // hết phòng
 
 void readRooms(Room rooms[], int &n)
 {
     FILE *fileIn = fopen("../File/room/room.in", "r");
     if (fileIn == NULL)
-        printf("\n%50c(!) Loi khi mo file (!)\n\a");
+        printf("\n%50c(!) Loi khi mo file (!)\n\a", ' ');
     else
     {
         n = 0;
@@ -23,7 +24,7 @@ void readRooms(Room rooms[], int &n)
             Room r;
             readARoom(fileIn, r);
             rooms[n++] = r; // đưa phòng vừa đọc vào mảng
-            Sleep(100);     // delay 0.1s
+            Sleep(50);      // delay 0.05s
             printf("\n%55c(*) Doc ban ghi thu %d (*)\n", ' ', n);
         }
     }
@@ -35,7 +36,7 @@ void writeRooms(Room rooms[], int &n)
     int count = 1;
     FILE *fileOut = fopen("../File/room/room.in", "w");
     if (fileOut == NULL)
-        printf("\n%50c(!) Loi khi mo file (!)\n\a");
+        printf("\n%50c(!) Loi khi mo file (!)\n\a", ' ');
     else
     {
         for (int i = 0; i < n; i++)
@@ -94,18 +95,33 @@ void outputRoomsAreWorking(Room rooms[], int n)
 
 void outputRoomsAreEmtpy(Room rooms[], int n)
 {
-    int count = 1;
-    printf("\n");
-    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
-    printf("%50c|  STT  |  So phong  |   Loai phong   |   Tinh trang   |\n", ' ');
-    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+    if (outOfRooms(rooms, n)) // nếu hết phòng
+        printf("\n\t%50c (!) Het phong (!)\n\a", ' ');
+    else
+    {
+        int count = 1;
+        printf("\n");
+        printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+        printf("%50c|  STT  |  So phong  |   Loai phong   |   Tinh trang   |\n", ' ');
+        printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+        for (int i = 0; i < n; i++)
+        {
+            if (rooms[i].isActive == 0)
+            {
+                printf("%50c|  %-5d", ' ', count++);
+                outputARoomByHorizontal(rooms[i]);
+            }
+        }
+        printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+    }
+}
+
+bool outOfRooms(Room rooms[], int n)
+{
     for (int i = 0; i < n; i++)
     {
-        if (rooms[i].isActive == 0)
-        {
-            printf("%50c|  %-5d", ' ', count++);
-            outputARoomByHorizontal(rooms[i]);
-        }
+        if (rooms[i].isActive == 0) // còn phòng trống -> thì trả về false
+            return false;
     }
-    printf("%50c+ ----- + ---------- + -------------- + -------------- +\n", ' ');
+    return true;
 }

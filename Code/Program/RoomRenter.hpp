@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Rooms.hpp"
+#include <time.h>
 
 struct Date
 {
@@ -32,7 +33,7 @@ void writeARoomRenter(FILE *fileOut, RoomRenter roomRenter);                    
 
 bool isValidDate(int day, int month, int year) // kiểm tra ngày nhập
 {
-    if (year <= 0 || month <= 0 || month > 12 || day <= 0 || day > 31)
+    if (year <= 0 || month <= 0 || month > 12 || day <= 0 || day > 31 || year >= 2022)
         return 0;
     if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
     {
@@ -205,7 +206,7 @@ void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n)
 void writeARoomRenter(FILE *fileOut, RoomRenter roomRenter)
 {
     fprintf(fileOut, "\n%s", roomRenter.fullName);
-    fprintf(fileOut, "\n%d %d %d", roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year);
+    fprintf(fileOut, "\n%.2d %.2d %.4d", roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year);
     fprintf(fileOut, "\n%d", roomRenter.sex);
     fprintf(fileOut, "\n%s\n%s", roomRenter.phoneNumber, roomRenter.identityCard);
     fprintf(fileOut, "\n%d", roomRenter.room->number);

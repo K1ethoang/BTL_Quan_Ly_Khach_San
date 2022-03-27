@@ -172,7 +172,6 @@ void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n)
     system("cls");
     printf("\n\t%50cTHONG TIN NGUOI THUE VUA NHAP\n", ' ');
     outputARoomRenterByVertical(r);
-    system("pause");
     addNodeInTail(roomRenters, r);
 }
 
@@ -208,8 +207,11 @@ void UpdateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phone
         {
             if (strcmp(t->data.phoneNumber, phoneNumber) == 0)
             {
+                // trước khi chỉnh sửa thì đưa phòng -> 0 (phòng trống)
+                t->data.room->isActive = 0;
                 inputARoomRenter(t->data, rooms, n);
                 printf("\n\t%40c(*) Chinh sua thanh cong (*)\n", ' ');
+                outputARoomRenterByVertical(t->data);
                 break;
             }
         }
@@ -269,7 +271,7 @@ void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
             RoomRenter r;
             readARoomRenter(fileIn, r, rooms, n);
             addNodeInTail(roomRenters, r);
-            Sleep(100); // delay 0.1s
+            Sleep(50); // delay 0.05s
             {
                 while (!feof(fileIn))
                 {
