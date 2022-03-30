@@ -20,7 +20,7 @@ void readRooms(Room rooms[], int &n)
         n = 0;
         while (!feof(fileIn))
         {
-            fflush(stdin);
+            // fflush(stdin);
             Room r;
             readARoom(fileIn, r);
             rooms[n++] = r; // đưa phòng vừa đọc vào mảng

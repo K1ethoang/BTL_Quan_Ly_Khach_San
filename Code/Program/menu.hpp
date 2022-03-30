@@ -161,8 +161,14 @@ void menu()
         case 6:
         {
             system("cls");
-            printf("\n\t%50c6. SAP XEP DANH SACH TANG DAN THEO CCCD\n");
-            printf("\nChua co code\n");
+            printf("\n\t%50c6. SAP XEP DANH SACH TANG DAN THEO CCCD\n", ' ');
+            if (roomRenters.pHead == NULL)
+                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a", ' ');
+            else
+            {
+                sortRoomRentersAscendingByIdentityCard(roomRenters);
+                outputRoomRenters(roomRenters);
+            }
             system("pause");
             break;
         }
@@ -178,6 +184,13 @@ void menu()
         {
             system("cls");
             printf("\n\t%50c8. IN DANH SACH NGUOI THUE\n", ' ');
+            if (roomRenters.pHead == NULL)
+                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a", ' ');
+            else
+            {
+                printRoomRenters(roomRenters);
+                printf("\n\t%10c(*) Danh sach nguoi thue duoc luu trong duong dan \"BTL_QUAN_LY_KHACH_SAN\\FILE\\roomRenter\\RoomRenters.txt\"\n", ' ');
+            }
             system("pause");
             break;
         }
@@ -204,14 +217,14 @@ void menu()
                 system("cls");
                 printf("\n\t%50c0. THOAT CHUONG TRINH\n", ' ');
                 char c;
-                printf("\n%50c(!) Ban chua luu thay doi (!)\n", ' ');
+                printf("\n%50c(!) Ban chua luu thay doi (!)\n\a", ' ');
                 do
                 {
                     fflush(stdin);
                     printf("\n%50c(?) Xac nhan thoat ma khong luu thay doi (y/n) (?): ", ' ');
                     scanf("%c", &c);
                     if (c != 'y' && c != 'n')
-                        printf("\n%50c(!) Lua chon khong hop le (!) - Nhap lai (!)", ' ');
+                        printf("\n%50c(!) Lua chon khong hop le (!) - Nhap lai (!)\a", ' ');
                     else
                     {
                         if (c == 'y')
@@ -288,10 +301,10 @@ void importRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
 
 void saveFile(RoomRenters roomRenters, Room rooms[], int n)
 {
-    printf("\n\t%40c(*) Dang luu du lieu cac phong (*)\n", ' ');
+    printf("\n\t%40c(*) Dang luu du lieu danh sach phong (*)\n", ' ');
     Sleep(2000); // delay 2s
     writeRooms(rooms, n);
-    printf("\n\t%40c(*) Dang luu du lieu cac nguoi thue (*)\n", ' ');
+    printf("\n\t%40c(*) Dang luu du lieu danh sach nguoi thue (*)\n", ' ');
     Sleep(2000); // delay 2s
     writeRoomRenters(roomRenters);
 }

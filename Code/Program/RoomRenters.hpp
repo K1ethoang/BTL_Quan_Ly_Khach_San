@@ -29,6 +29,8 @@ void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber);            
 void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n);                     // đọc danh sách người thuê
 void writeRoomRenters(RoomRenters roomRenters);                                          // ghi danh sách người thuê
 void clearRoomRenters(RoomRenters &roomRenters);                                         // giải phóng vùng nhớ của ds người thuê
+void printRoomRenters(RoomRenters roomRenters);                                          // in file danh sách người thuê
+void sortRoomRentersAscendingByIdentityCard(RoomRenters &roomRenters);                   // sắp xếp tăng dần theo CCCD
 
 void createList(RoomRenters &roomRenters)
 {
@@ -181,7 +183,6 @@ void outputRoomRenters(RoomRenters roomRenters)
     printf("+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
     printf("|   STT   |           Ho va ten           |   Ngay sinh   | Gioi tinh |  So dien thoai  |        So CCCD       |  So phong  | \n");
     printf("+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
-
     for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
     {
         printf("| %-7d ", count++);
@@ -190,11 +191,11 @@ void outputRoomRenters(RoomRenters roomRenters)
     printf("+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
 }
 
-void swapTwoRoomRenters(RoomRenter *roomRenter1, RoomRenter *roomRenter2)
+void swapTwoRoomRenters(RoomRenter &roomRenter1, RoomRenter &roomRenter2)
 {
-    RoomRenter temp = *roomRenter1;
-    *roomRenter1 = *roomRenter2;
-    *roomRenter2 = temp;
+    RoomRenter temp = roomRenter1;
+    roomRenter1 = roomRenter2;
+    roomRenter2 = temp;
 }
 
 void UpdateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber)
@@ -313,5 +314,49 @@ void clearRoomRenters(RoomRenters &roomRenters)
         t = roomRenters.pHead;
         roomRenters.pHead = roomRenters.pHead->pNext;
         free(t);
+    }
+}
+
+void printRoomRenters(RoomRenters roomRenters)
+{
+    FILE *fileOut = fopen("../File/roomRenter/RoomRenters.txt", "w");
+    if (fileOut == NULL)
+    {
+        printf("\n\t%50c(*) In file khong thanh cong (*)\n\a", ' ');
+    }
+    else
+    {
+        int count = 1;
+        fprintf(fileOut, "%s", "+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
+        fprintf(fileOut, "%s", "|   STT   |           Ho va ten           |   Ngay sinh   | Gioi tinh |  So dien thoai  |        So CCCD       |  So phong  | \n");
+        fprintf(fileOut, "%s", "+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
+        for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
+        {
+            fprintf(fileOut, "%c %-7d ", '|', count++);
+            char sex[4];
+            if (t->data.sex == 0)
+                strcpy(sex, "Nu");
+            else
+                strcpy(sex, "Nam");
+            fprintf(fileOut, "%c %-30s%c %-.2d%c%.-2d%c%-.4d    %c %-9s %c %-15s %c %-20s %c %-10d %c\n", '|', t->data.fullName, '|', t->data.birthDay.day, '/', t->data.birthDay.month, '/', t->data.birthDay.year, '|', sex, '|', t->data.phoneNumber, '|', t->data.identityCard, '|', t->data.room->number, '|');
+        }
+        fprintf(fileOut, "%s", "+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
+        printf("\n\t%50c(*) In file thanh cong (*)\n", ' ');
+    }
+    fclose(fileOut);
+}
+
+void sortRoomRentersAscendingByIdentityCard(RoomRenters &roomRenters)
+{
+    for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
+    {
+        Node *minIndex = t;
+        for (Node *g = t->pNext; g != NULL; g = g->pNext)
+        {
+            if (strcmp(minIndex->data.identityCard, g->data.identityCard) > 0)
+                minIndex = g;
+        }
+        if (minIndex != t)
+            swapTwoRoomRenters(t->data, minIndex->data);
     }
 }
