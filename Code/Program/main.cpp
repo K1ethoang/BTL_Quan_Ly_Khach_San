@@ -33,8 +33,8 @@ int main()
         {
             if (time == 0)
             {
-                printf("\n\n\t%30c (!) Chuong trinh tu dong thoat vi ban dang nhap qua so lan cho phep (!)\n\a", ' ');
-                system("pause");
+                printf("\n\n\t%30c (!) Chuong trinh tu dong thoat sau 2s (!)\n\a", ' ');
+                Sleep(2000);
                 break;
             }
             else
