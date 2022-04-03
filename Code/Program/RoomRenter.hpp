@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Rooms.hpp"
-#include <time.h>
 
 struct Date
 {
@@ -20,6 +19,7 @@ struct RoomRenter
     Room *room = NULL;     // trỏ đến phòng thuê
 };
 
+void formatString(char *s);                                                      // định dạng lại chuỗi
 bool isValidDate(int day, int month, int year);                                  // kiểm tra xem ngày có hợp lệ hay không
 void inputDate(int &day, int &month, int &year);                                 // nhập ngày tháng năm
 void chooseSex(RoomRenter &roomRenter);                                          // chọn giới tính
@@ -30,6 +30,24 @@ void outputARoomRenterByVertical(RoomRenter roomRenter);                        
 void outputARoomRenterByHorizontal(RoomRenter roomRenter);                       // in 1 người thuê theo chiều ngang - có định dạng in
 void readARoomRenter(FILE *fileIn, RoomRenter &roomRenter, Room rooms[], int n); // đọc 1 người thuê từ file
 void writeARoomRenter(FILE *fileOut, RoomRenter roomRenter);                     // ghi 1 người thuê ra file
+
+void formatString(char *s)
+{
+    // vd: nGUyeN VAN a -> Nguyen Van A
+    for (int i = 0; i < strlen(s); i++)
+    {
+        if (i == 0 || (i > 0 && s[i - 1] == ' '))
+        {
+            if (s[i] >= 'a' && s[i] <= 'z')
+                s[i] = s[i] - 32;
+        }
+        else
+        {
+            if (s[i] >= 'A' && s[i] <= 'Z')
+                s[i] = s[i] + 32;
+        }
+    }
+}
 
 bool isValidDate(int day, int month, int year) // kiểm tra ngày nhập
 {
@@ -135,6 +153,7 @@ void inputARoomRenter(RoomRenter &roomRenter, Room rooms[], int n)
     fflush(stdin);
     printf("\n%50c(?) Nhap ho va ten: ", ' ');
     gets(roomRenter.fullName);
+    formatString(roomRenter.fullName);
     system("cls");
     printf("\n%50c(*) Ngay sinh (*)\n", ' ');
     inputDate(roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year);

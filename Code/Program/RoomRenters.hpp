@@ -31,6 +31,7 @@ void writeRoomRenters(RoomRenters roomRenters);                                 
 void clearRoomRenters(RoomRenters &roomRenters);                                         // giải phóng vùng nhớ của ds người thuê
 void printRoomRenters(RoomRenters roomRenters);                                          // in file danh sách người thuê
 void sortRoomRentersAscendingByIdentityCard(RoomRenters &roomRenters);                   // sắp xếp tăng dần theo CCCD
+void findRoomRentersByName(RoomRenters roomRenters, char *name);                         // tìm người thuê theo tên
 
 void createList(RoomRenters &roomRenters)
 {
@@ -359,4 +360,21 @@ void sortRoomRentersAscendingByIdentityCard(RoomRenters &roomRenters)
         if (minIndex != t)
             swapTwoRoomRenters(t->data, minIndex->data);
     }
+}
+
+void findRoomRentersByName(RoomRenters roomRenters, char *name)
+{
+    int count = 1;
+    printf("+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
+    printf("|   STT   |           Ho va ten           |   Ngay sinh   | Gioi tinh |  So dien thoai  |        So CCCD       |  So phong  | \n");
+    printf("+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
+    for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
+    {
+        if (strstr(strlwr(t->data.fullName), name) != NULL)
+        {
+            printf("| %-7d ", count++);
+            outputARoomRenterByHorizontal(t->data);
+        }
+    }
+    printf("+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
 }
