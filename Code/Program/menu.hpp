@@ -176,7 +176,16 @@ void menu()
         {
             system("cls");
             printf("\n\t%50c7. TIM KIEM NGUOI THUE THEO TEN\n", ' ');
-            printf("\nChua co code\n");
+            if (roomRenters.pHead == NULL)
+                printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a", ' ');
+            else
+            {
+                char name[50];
+                printf("\n%50cNhap ten can tim: ", ' ');
+                fflush(stdin);
+                gets(name);
+                findRoomRentersByName(roomRenters, name);
+            }
             system("pause");
             break;
         }
