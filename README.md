@@ -1,4 +1,4 @@
-# vài điều muốn nói 
+# Vài điều muốn nói 
 - Dùng để tham khảo khi học ✅ chứ KHÔNG để copy ❌.
 - Thấy hữu ích thì để lại cho tụi mình 1 ⭐ nha.
 
