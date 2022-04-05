@@ -295,7 +295,7 @@ void importRooms(Room rooms[], int &n)
 {
     system("cls");
     printf("\n\t%40c(*) Dang nhap du lieu danh sach phong (*)\n", ' ');
-    Sleep(2000); // delay 2s
+    Sleep(1000); // delay 2s
     readRooms(rooms, n);
 }
 
@@ -304,16 +304,16 @@ void importRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
     createList(roomRenters);
     system("cls");
     printf("\n\t%40c(*) Dang nhap du lieu danh sach nguoi thue (*)\n", ' ');
-    Sleep(2000); // delay 2s
+    Sleep(1000); // delay 2s
     readRoomRenters(roomRenters, rooms, n);
 }
 
 void saveFile(RoomRenters roomRenters, Room rooms[], int n)
 {
     printf("\n\t%40c(*) Dang luu du lieu danh sach phong (*)\n", ' ');
-    Sleep(2000); // delay 2s
+    Sleep(1000); // delay 2s
     writeRooms(rooms, n);
     printf("\n\t%40c(*) Dang luu du lieu danh sach nguoi thue (*)\n", ' ');
-    Sleep(2000); // delay 2s
+    Sleep(1000); // delay 2s
     writeRoomRenters(roomRenters);
 }

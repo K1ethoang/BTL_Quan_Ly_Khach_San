@@ -370,11 +370,16 @@ void findRoomRentersByName(RoomRenters roomRenters, char *name)
     printf("+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
     for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
     {
+        // dùng strlwr() để chuyển tên về in thường hết: nguyen van a
         if (strstr(strlwr(t->data.fullName), name) != NULL)
         {
+            // sau khi kiểm tra xong thì chuyển lại đúng chuẩn: Nguyen Van A
+            formatString(t->data.fullName); // Hàm này trong file RoomRenter.hpp
             printf("| %-7d ", count++);
             outputARoomRenterByHorizontal(t->data);
         }
+        else                                // nếu không có thì chuyển lại đúng chuẩn
+            formatString(t->data.fullName); // Hàm này trong file RoomRenter.hpp
     }
     printf("+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
 }
