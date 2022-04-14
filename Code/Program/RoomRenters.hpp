@@ -371,7 +371,7 @@ void findRoomRentersByName(RoomRenters roomRenters, char *name)
     for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
     {
         // dùng strlwr() để chuyển tên về in thường hết: nguyen van a
-        if (strstr(strlwr(t->data.fullName), name) != NULL)
+        if (strstr(strlwr(t->data.fullName), strlwr(name)) != NULL)
         {
             // sau khi kiểm tra xong thì chuyển lại đúng chuẩn: Nguyen Van A
             formatString(t->data.fullName); // Hàm này trong file RoomRenter.hpp
