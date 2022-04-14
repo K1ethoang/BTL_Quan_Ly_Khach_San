@@ -80,7 +80,7 @@ void menu()
                 char phoneNumber[15];
                 printf("\n%50cNhap SDT cua nguoi thue can sua: ", ' ');
                 scanf("%s", &phoneNumber);
-                UpdateRoomRenter(roomRenters, rooms, n, phoneNumber);
+                updateRoomRenter(roomRenters, rooms, n, phoneNumber);
                 outputRoomRenters(roomRenters);
             }
             system("pause");
