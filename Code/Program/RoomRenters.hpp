@@ -24,7 +24,7 @@ void removeNodeInTail(RoomRenters &roomRenters);                                
 void addARoomRenter(RoomRenters &roomRenters, Room rooms[], int n);                      // thêm 1 người thuê vào list
 void outputRoomRenters(RoomRenters roomRenters);                                         // in list người thuê
 void swapTwoRoomRenters(RoomRenter &roomRenter1, RoomRenter &roomRenter2);               // hoán vị 2 người thuê
-void UpdateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber); // chỉnh sửa danh sách người thuê
+void updateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber); // chỉnh sửa danh sách người thuê
 void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber);                     // xoá 1 người thuê
 void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n);                     // đọc danh sách người thuê
 void writeRoomRenters(RoomRenters roomRenters);                                          // ghi danh sách người thuê
@@ -199,7 +199,7 @@ void swapTwoRoomRenters(RoomRenter &roomRenter1, RoomRenter &roomRenter2)
     roomRenter2 = temp;
 }
 
-void UpdateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber)
+void updateRoomRenter(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber)
 {
     if (!isExitPhoneNumber(roomRenters, phoneNumber))
         printf("\n\t%40c(!) Khong ton tai nguoi thue nay (!)\n\a", ' ');
