@@ -243,7 +243,7 @@ void deleteARoomRenter(RoomRenters &roomRenters, char *phoneNumber)
         else
         {
             Node *g = NULL; // node nằm trước node cần xoá
-            for (Node *t = roomRenters.pHead->pNext; t != NULL; t = t->pNext)
+            for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
             {
                 if (strcmp(t->data.phoneNumber, phoneNumber) == 0)
                 {
