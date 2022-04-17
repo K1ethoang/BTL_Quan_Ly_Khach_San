@@ -9,10 +9,11 @@ struct Room
     char type[10]; // loại phòng: thường or cao cấp
     bool isActive; // tình trạng phòng - 0:trống   1:đầy
 };
-void chooseRoomType(Room &room);           // chọn loại phòng
-void chooseRoomStatus(Room &room);         // chọn tình trạng phòng
-void inputARoom(Room *room);               // nhập 1 phòng
-void outputARoomByVertical(Room room);     // in 1 phòng theo chiều dọc
+
+// void chooseRoomType(Room &room);           // chọn loại phòng
+// void chooseRoomStatus(Room &room);         // chọn tình trạng phòng
+// void inputARoom(Room *room);               // nhập 1 phòng
+// void outputARoomByVertical(Room room);     // in 1 phòng theo chiều dọc
 void outputARoomByHorizontal(Room room);   // in 1 phòng theo chiều ngang
 void removeEnterChar(char *s);             // xoá kí tự \n
 void readARoom(FILE *fileIn, Room &room);  // đọc 1 phòng từ file
