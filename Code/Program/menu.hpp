@@ -24,15 +24,15 @@ void menu()
         printf("%50c####################################################\n", ' ');
         printf("%50c##                QUAN LY KHACH SAN               ##\n", ' ');
         printf("%50c##------------------------------------------------##\n", ' ');
-        printf("%50c##      1. Them nguoi thue                        ##\n", ' ');
-        printf("%50c##      2. Xem danh sach nguoi thue               ##\n", ' ');
-        printf("%50c##      3. Chinh sua nguoi thue                   ##\n", ' ');
-        printf("%50c##      4. Thanh toan                             ##\n", ' ');
-        printf("%50c##      5. Xem tinh trang phong                   ##\n", ' ');
-        printf("%50c##      6. Sap xep danh sach tang dan theo CCCD   ##\n", ' ');
-        printf("%50c##      7. Tim kiem nguoi thue theo ten           ##\n", ' ');
-        printf("%50c##      8. In danh sach nguoi thue                ##\n", ' ');
-        printf("%50c##      9. Luu thay doi                           ##\n", ' ');
+        printf("%50c##    1. Them nguoi thue                          ##\n", ' ');
+        printf("%50c##    2. Xem danh sach nguoi thue                 ##\n", ' ');
+        printf("%50c##    3. Chinh sua nguoi thue                     ##\n", ' ');
+        printf("%50c##    4. Thanh toan                               ##\n", ' ');
+        printf("%50c##    5. Xem tinh trang phong                     ##\n", ' ');
+        printf("%50c##    6. Sap xep danh sach tang dan theo so phong ##\n", ' ');
+        printf("%50c##    7. Tim kiem nguoi thue theo ten             ##\n", ' ');
+        printf("%50c##    8. In danh sach nguoi thue                  ##\n", ' ');
+        printf("%50c##    9. Luu thay doi                             ##\n", ' ');
         printf("%50c##------------------------------------------------##\n", ' ');
         printf("%50c##            0. Thoat chuong trinh               ##\n", ' ');
         printf("%50c####################################################\n", ' ');
@@ -161,12 +161,12 @@ void menu()
         case 6:
         {
             system("cls");
-            printf("\n\t%50c6. SAP XEP DANH SACH TANG DAN THEO CCCD\n", ' ');
+            printf("\n\t%50c6. SAP XEP DANH SACH TANG DAN THEO SO PHONG\n", ' ');
             if (roomRenters.pHead == NULL)
                 printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a", ' ');
             else
             {
-                sortRoomRentersAscendingByIdentityCard(roomRenters);
+                sortRoomRentersAscendingByRoomNumber(roomRenters);
                 outputRoomRenters(roomRenters);
             }
             system("pause");

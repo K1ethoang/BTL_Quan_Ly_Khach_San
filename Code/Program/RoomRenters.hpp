@@ -30,7 +30,7 @@ void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n);            
 void writeRoomRenters(RoomRenters roomRenters);                                          // ghi danh sách người thuê
 void clearRoomRenters(RoomRenters &roomRenters);                                         // giải phóng vùng nhớ của ds người thuê
 void printRoomRenters(RoomRenters roomRenters);                                          // in file danh sách người thuê
-void sortRoomRentersAscendingByIdentityCard(RoomRenters &roomRenters);                   // sắp xếp tăng dần theo CCCD
+void sortRoomRentersAscendingByRoomNumber(RoomRenters &roomRenters);                     // sắp xếp tăng dần theo số phòng
 void findRoomRentersByName(RoomRenters roomRenters, char *name);                         // tìm người thuê theo tên
 
 void createList(RoomRenters &roomRenters)
@@ -347,14 +347,14 @@ void printRoomRenters(RoomRenters roomRenters)
     fclose(fileOut);
 }
 
-void sortRoomRentersAscendingByIdentityCard(RoomRenters &roomRenters)
+void sortRoomRentersAscendingByRoomNumber(RoomRenters &roomRenters)
 {
     for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
     {
         Node *minIndex = t;
         for (Node *g = t->pNext; g != NULL; g = g->pNext)
         {
-            if (strcmp(minIndex->data.identityCard, g->data.identityCard) > 0)
+            if (minIndex->data.room->number > g->data.room->number)
                 minIndex = g;
         }
         if (minIndex != t)
