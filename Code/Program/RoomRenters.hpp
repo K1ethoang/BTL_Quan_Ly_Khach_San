@@ -32,6 +32,8 @@ void clearRoomRenters(RoomRenters &roomRenters);                                
 void printRoomRenters(RoomRenters roomRenters);                                          // in file danh sách người thuê
 void sortRoomRentersAscendingByRoomNumber(RoomRenters &roomRenters);                     // sắp xếp tăng dần theo số phòng
 void findRoomRentersByName(RoomRenters roomRenters, char *name);                         // tìm người thuê theo tên
+void chooseFunctionToUpdate(RoomRenter &roomRenter, Room rooms[], int n);
+void updateRommRenterV2(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber);
 
 void createList(RoomRenters &roomRenters)
 {
@@ -382,4 +384,112 @@ void findRoomRentersByName(RoomRenters roomRenters, char *name)
             formatString(t->data.fullName); // Hàm này trong file RoomRenter.hpp
     }
     printf("+ ------- + ----------------------------- + ------------- + --------- + --------------- + -------------------- + ---------- + \n");
+}
+
+void chooseFunctionToUpdate(RoomRenter &roomRenter, Room rooms[], int n)
+{
+    int choose;
+    bool exit = false;
+    fflush(stdin);
+    do
+    {
+        system("cls");
+        printf("\n%50c1. Ho ten", ' ');
+        printf("\n%50c2. Ngay sinh", ' ');
+        printf("\n%50c3. Gioi tinh", ' ');
+        printf("\n%50c4. So dien thoai", ' ');
+        printf("\n%50c5. So CCCD", ' ');
+        printf("\n%50c6. So phong", ' ');
+        printf("\n%50c0. Ok", ' ');
+        printf("\n%50cNhap lua chon can chinh sua: ", ' ');
+        scanf("%d", &choose);
+        fflush(stdin);
+        switch (choose)
+        {
+        case 1:
+        {
+            printf("\n%50cNhap ho ten: ", ' ');
+            gets(roomRenter.fullName);
+            formatString(roomRenter.fullName);
+            outputARoomRenterByVertical(roomRenter);
+            system("pause");
+            break;
+        }
+        case 2:
+        {
+            inputDate(roomRenter.birthDay.day, roomRenter.birthDay.month, roomRenter.birthDay.year);
+            outputARoomRenterByVertical(roomRenter);
+            system("pause");
+            break;
+        }
+        case 3:
+        {
+            chooseSex(roomRenter);
+            outputARoomRenterByVertical(roomRenter);
+            system("pause");
+            break;
+        }
+        case 4:
+        {
+            do
+            {
+                printf("\n%50c(?) Nhap so dien thoai (10 so): ", ' ');
+                scanf("%s", &roomRenter.phoneNumber);
+                if (strlen(roomRenter.phoneNumber) <= 0 || strlen(roomRenter.phoneNumber) > 10 || strlen(roomRenter.phoneNumber) != 10)
+                    printf("\n\t%40c(!) So dien thoai khong hop le - Nhap lai (!)\n\a", ' ');
+            } while (strlen(roomRenter.phoneNumber) <= 0 || strlen(roomRenter.phoneNumber) > 10 || strlen(roomRenter.phoneNumber) != 10);
+            outputARoomRenterByVertical(roomRenter);
+            system("pause");
+            break;
+        }
+        case 5:
+        {
+            do
+            {
+                printf("\n%50c(?) Nhap so CCCD (12 so): ", ' ');
+                scanf("%s", &roomRenter.identityCard);
+                if ((strlen(roomRenter.identityCard) <= 0 || strlen(roomRenter.identityCard) > 12) || strlen(roomRenter.identityCard) != 12)
+                    printf("\n\t%40c(!) So CCCD khong hop le - Nhap lai (!)\n\a", ' ');
+            } while ((strlen(roomRenter.identityCard) <= 0 || strlen(roomRenter.identityCard) > 12) || strlen(roomRenter.identityCard) != 12);
+            outputARoomRenterByVertical(roomRenter);
+            system("pause");
+            break;
+        }
+        case 6:
+        {
+            roomRenter.room->isActive = 0;
+            chooseRoom(roomRenter, rooms, n);
+            outputARoomRenterByVertical(roomRenter);
+            system("pause");
+            break;
+        }
+        case 0:
+        {
+            exit = true;
+            break;
+        }
+        default:
+            printf("\n\t%50cLua chon khong hop le - Nhap lai", ' ');
+            break;
+        }
+    } while (!exit);
+}
+
+void updateRommRenterV2(RoomRenters &roomRenters, Room rooms[], int n, char *phoneNumber)
+{
+    if (!isExitPhoneNumber(roomRenters, phoneNumber))
+        printf("\n\t%40c(!) Khong ton tai nguoi thue nay (!)\n\a", ' ');
+    else
+    {
+        for (Node *t = roomRenters.pHead; t != NULL; t = t->pNext)
+        {
+            if (strcmp(t->data.phoneNumber, phoneNumber) == 0)
+            {
+                chooseFunctionToUpdate(t->data, rooms, n);
+                system("cls");
+                printf("\n\t%40c(*) Chinh sua thanh cong (*)\n", ' ');
+                break;
+            }
+        }
+    }
 }

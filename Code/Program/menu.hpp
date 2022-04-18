@@ -80,7 +80,8 @@ void menu()
                 char phoneNumber[15];
                 printf("\n%50cNhap SDT cua nguoi thue can sua: ", ' ');
                 scanf("%s", &phoneNumber);
-                updateRoomRenter(roomRenters, rooms, n, phoneNumber);
+                // updateRoomRenter(roomRenters, rooms, n, phoneNumber);
+                updateRommRenterV2(roomRenters, rooms, n, phoneNumber);
                 outputRoomRenters(roomRenters);
             }
             system("pause");
@@ -197,8 +198,12 @@ void menu()
                 printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a", ' ');
             else
             {
+                writeRooms(rooms,n);
+                writeRoomRenters(roomRenters);
+                system("cls");
                 printRoomRenters(roomRenters);
                 printf("\n\t%10c(*) Danh sach nguoi thue duoc luu trong duong dan \"BTL_QUAN_LY_KHACH_SAN\\FILE\\roomRenter\\RoomRenters.txt\"\n", ' ');
+                fileSaved = true;   
             }
             system("pause");
             break;
