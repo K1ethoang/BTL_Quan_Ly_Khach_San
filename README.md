@@ -13,8 +13,7 @@
 
 # 2. Nội dung
 - [Code](./Code/Program)
-- [Report](./Code/File/report.docx)
-- [Slide](./Code/File/)
+- [Report.pdf](./Doc/report.pdf)
  
 # 3. Code
 - Được viết trên Visual Studio Code (VSCode) - bạn có thể xem cách cài đặt vscode để code C/C++ -> [Ở đây](https://www.youtube.com/watch?v=BOa0Enkaw9c)
