@@ -198,12 +198,12 @@ void menu()
                 printf("\n\t%50c(*) Danh sach nguoi thue trong (*)\n\a", ' ');
             else
             {
-                writeRooms(rooms,n);
+                writeRooms(rooms, n);
                 writeRoomRenters(roomRenters);
                 system("cls");
                 printRoomRenters(roomRenters);
                 printf("\n\t%10c(*) Danh sach nguoi thue duoc luu trong duong dan \"BTL_QUAN_LY_KHACH_SAN\\FILE\\roomRenter\\RoomRenters.txt\"\n", ' ');
-                fileSaved = true;   
+                fileSaved = true;
             }
             system("pause");
             break;

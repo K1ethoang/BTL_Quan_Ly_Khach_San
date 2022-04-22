@@ -12,9 +12,9 @@
   - Võ Thị Tường Vi
 
 # 2. Nội dung
-- [Code](./Code/Program/)
-- [Doc](./Báo%20cáo/)
-- [Slide](./Báo%20cáo/)
+- [Code](./Code/Program)
+- [Doc](./Code/File/report.docx)
+- [Slide](./Code/File/)
  
 # 3. Code
 - Được viết trên Visual Studio Code (VSCode) - bạn có thể xem cách cài đặt vscode để code C/C++ -> [Ở đây](https://www.youtube.com/watch?v=BOa0Enkaw9c)
