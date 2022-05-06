@@ -276,16 +276,8 @@ void readRoomRenters(RoomRenters &roomRenters, Room rooms[], int n)
             readARoomRenter(fileIn, r, rooms, n);
             addNodeInTail(roomRenters, r);
             Sleep(50); // delay 0.05s
-            {
-                while (!feof(fileIn))
-                {
-                    fflush(stdin);
-                    RoomRenter r;
-                    readARoomRenter(fileIn, r, rooms, n);
-                    addNodeInTail(roomRenters, r);
-                    printf("\n%55c(*) Doc ban ghi thu %d (*)\n", ' ', count++);
-                }
-            }
+            addNodeInTail(roomRenters, r);
+            printf("\n%55c(*) Doc ban ghi thu %d (*)\n", ' ', count++);
         }
     }
     fclose(fileIn);
